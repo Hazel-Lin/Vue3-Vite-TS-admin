@@ -1,0 +1,34 @@
+/*  初始化样式 */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	outline: none !important;
+}
+html,
+body,
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+    font-size: 14px;
+    overflow: hidden;
+    position: relative;
+}
+// 第三方图标字体间距/大小设置
+.el-menu-item .iconfont,
+.el-sub-menu .iconfont {
+	font-size: 14px !important;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 5px;
+	width: 24px;
+	text-align: center;
+}
