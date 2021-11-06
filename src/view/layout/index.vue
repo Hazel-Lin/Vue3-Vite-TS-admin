@@ -10,27 +10,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import Aside from "./component/Aside.vue";
-import Header from "./component/Header.vue";
-import Main from "./component/Main.vue";
+import { defineComponent, ref } from 'vue'
+import Aside from './component/Aside.vue'
+import Header from './component/Header.vue'
+import Main from './component/Main.vue'
 
 export default defineComponent({
   components: {
     Aside,
     Header,
-    Main,
+    Main
   },
-  setup() {
-    
-  },
-});
+  setup() {}
+})
 </script>
 
 <style scoped>
-.layout-contain{
-    width: 100%;
-    height: 100%;
+.layout-contain {
+  width: 100%;
+  height: 100%;
 }
 .el-header {
   background-color: #b3c0d1;
