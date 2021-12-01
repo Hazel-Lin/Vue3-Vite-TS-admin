@@ -1,23 +1,21 @@
 <template>
-  <el-header>
-    <el-dropdown>
-      <el-icon style="margin-right: 15px"></el-icon>
-      <template #dropdown>
-        <el-dropdown-menu>
-          <el-dropdown-item>View</el-dropdown-item>
-          <el-dropdown-item>Add</el-dropdown-item>
-          <el-dropdown-item>Delete</el-dropdown-item>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
+  <div class="content-nav-head">
     <span>Tom</span>
-  </el-header>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, computed } from 'vue'
 
-export default defineComponent({});
+export default defineComponent({})
 </script>
 
-<style lang="sass"></style>
+<style lang="scss">
+.content-nav-head {
+  display: flex;
+}
+.el-icon-location {
+  width: 40px;
+  height: 40px;
+}
+</style>

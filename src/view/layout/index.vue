@@ -1,10 +1,9 @@
 <template>
   <el-container class="layout-contain">
     <Aside />
-
-    <el-container>
-      <Header />
-      <Main />
+    <el-container class="content">
+      <el-header><Header /></el-header>
+      <el-main> <Main /></el-main>
     </el-container>
   </el-container>
 </template>
@@ -26,17 +25,18 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.layout-contain {
+.layout-contain,
+.content {
   width: 100%;
   height: 100%;
 }
 .el-header {
-  background-color: #b3c0d1;
+  display: flex;
+  color: #333;
+  text-align: center;
+  align-items: center;
+  border: 1px solid red;
   color: var(--el-text-color-primary);
   line-height: 60px;
-}
-
-.el-aside {
-  color: var(--el-text-color-primary);
 }
 </style>

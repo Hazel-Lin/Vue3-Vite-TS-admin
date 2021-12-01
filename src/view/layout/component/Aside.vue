@@ -1,35 +1,33 @@
 <template>
   <div class="mainSide">
+    <!-- <div class="logo">
+      <img class="img" src="https://cn.vitejs.dev/logo.svg" alt="logo" />
+      <span v-show="!isCollapse" class="title">Vue3Admin</span>
+    </div> -->
     <el-menu
-      background-color="rgb(48, 65, 86)"
-      text-color="#fff"
-      active-text-color="#ffd04b"
+      :unique-opened="false"
+      background-color="#001529"
+      text-color="#B7BDC3"
+      active-text-color="#fff"
     >
       <template v-for="item in items">
-        <template v-if="item.subs">
-          <el-sub-menu :index="item.index" :key="item.index">
+        <!-- 包含子菜单 -->
+          <el-sub-menu :index="item.index" :key="item.index" v-if="item.subs">
             <template #title>
-              <i :class="item.icon"></i>
-              <span>{{ item.title }}</span>
+              <i class="el-icon-location"></i>
+              <span>{{ item.title }}{{item.icon}}</span>
             </template>
-            <template v-for="subItem in item.subs">
-              <el-sub-menu
-                v-if="subItem.subs"
-                :index="subItem.index"
-                :key="subItem.index"
-              >
-                <template #title>{{ subItem.title }}</template>
-              </el-sub-menu>
-              <el-menu-item v-else :index="subItem.index" :key="subItem.index"
+            <template v-for="subItem in item.subs" :key="subItem.index">
+              <el-menu-item :index="subItem.index"
                 >{{ subItem.title }}
               </el-menu-item>
             </template>
           </el-sub-menu>
-        </template>
+        <!-- 只有一级菜单 -->
         <template v-else>
           <el-menu-item :index="item.index" :key="item.index">
             <i :class="item.icon"></i>
-            <template #title>{{ item.title }}</template>
+            <span>{{ item.title }}{{item.icon}}</span>
           </el-menu-item>
         </template>
       </template>
@@ -83,11 +81,6 @@ export default defineComponent({
       },
       {
         icon: 'el-icon-menu',
-        index: '/charts',
-        title: 'schart图表'
-      },
-      {
-        icon: 'el-icon-menu',
         index: '/i18n',
         title: '国际化功能'
       },
@@ -97,19 +90,10 @@ export default defineComponent({
         title: '错误处理',
         subs: [
           {
-            index: '/permission',
-            title: '权限测试'
-          },
-          {
             index: '/404',
             title: '404页面'
           }
         ]
-      },
-      {
-        icon: 'el-icon-menu',
-        index: '/donate',
-        title: '支持作者'
       }
     ]
     return {
@@ -119,10 +103,30 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style scoped lang='scss'>
 .mainSide {
-  background-color: #d3dce6;
-  width: 250px;
+  background-color: #001529;
+  min-width: 200px;
+}
+// logo 布局
+.logo {
+  display: flex;
+  height: 28px;
+  padding: 12px 10px 8px 10px;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+
+  .img {
+    height: 100%;
+    margin: 0 10px;
+  }
+
+  .title {
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+  }
 }
 .layout-aside {
   text-align: center;
@@ -130,5 +134,8 @@ export default defineComponent({
 }
 .mainSide > ul {
   height: 100%;
+}
+.mainSide i::before {
+  content: '';
 }
 </style>

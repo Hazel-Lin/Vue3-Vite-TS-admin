@@ -7,31 +7,35 @@
  * 导航守卫处理
  * @ 标识符的定义
  */
-import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 
 // RouteRecordRaw 路由记录
-const routes: any = [
+const routes: RouteRecordRaw[] = [
   {
-    path: "/",
+    path: '/',
+    redirect: '/home'
+  },
+  {
+    path: '/home',
     component: () =>
-      import(/* webpackChunkName: "layout" */ "@/view/layout/index.vue"),
-    name: "Home",
+      import(/* webpackChunkName: "layout" */ '@/view/layout/index.vue'),
+    name: 'Home',
     children: [
       {
-        path: "login",
+        path: 'login',
         component: () =>
-          import(/* webpackChunkName: "login" */ "@/view/login/index.vue"),
-      },
-    ],
-  },
-];
+          import(/* webpackChunkName: "login" */ '@/view/login/index.vue')
+      }
+    ]
+  }
+]
 // 创建一个路由实例
 const router = createRouter({
   // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
   history: createWebHashHistory(),
-  routes, // 应该添加到路由的初始路由列表。
-});
+  routes // 应该添加到路由的初始路由列表。
+})
 // 路由守卫
-router.beforeEach((to, from) => {});
+router.beforeEach((to, from) => {})
 
-export default router;
+export default router

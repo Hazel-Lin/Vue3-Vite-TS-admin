@@ -1,5 +1,7 @@
 <template>
-  <el-main> </el-main>
+  <div>
+    <el-button type="primary">测试</el-button>
+  </div>
 </template>
 
 <script lang="ts">
