@@ -2,14 +2,13 @@
   <div class="mainSide">
     <div class="logo">
       <img class="img" src="@/assets/logo.png" alt="logo" />
-      <span class="title">Vue3Admin</span>
+      <span class="title" v-if="!collapse">Vue3Admin</span>
     </div>
     <el-menu
       :collapse="collapse"
       background-color="#0c2135"
       text-color="#b7bdc3"
       active-text-color="#0a60bd"
-      :unique-opened="false"
     >
       <template v-for="item in items">
         <!-- 包含子菜单 -->
@@ -88,7 +87,6 @@ export default defineComponent({
 .mainSide {
   background-color: #0c2135;
   height: 100%;
-  min-width: 200px;
 }
 // logo 布局
 .logo {
@@ -117,5 +115,4 @@ export default defineComponent({
   height: 100%;
   border-right: none; // 去除右边框 避免出现错位情况
 }
-
 </style>

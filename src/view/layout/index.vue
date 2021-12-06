@@ -1,27 +1,23 @@
 <template>
   <el-container class="layout-contain">
-    <Aside />
+    <Aside :collapse="collapse" />
     <el-container class="content">
-      <el-header><Header /></el-header>
-      <el-main> <Main /></el-main>
+      <el-header><my-header @changeFlod="handleChangeFlod" /></el-header>
+      <el-main><Main></Main></el-main>
     </el-container>
   </el-container>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { defineComponent, ref } from 'vue'
 import Aside from './component/Aside.vue'
-import Header from './component/Header.vue'
+import MyHeader from './component/Header.vue'
 import Main from './component/Main.vue'
 
-export default defineComponent({
-  components: {
-    Aside,
-    Header,
-    Main
-  },
-  setup() {}
-})
+const collapse = ref(false)
+const handleChangeFlod = (flod) => {
+  collapse.value = flod
+}
 </script>
 
 <style scoped>
