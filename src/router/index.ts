@@ -16,15 +16,38 @@ const routes: RouteRecordRaw[] = [
     redirect: '/home'
   },
   {
+    path: '/login',
+    component: () =>
+      import(/* webpackChunkName: "login" */ '@/view/login/index.vue')
+  },
+  {
     path: '/home',
     component: () =>
       import(/* webpackChunkName: "layout" */ '@/view/layout/index.vue'),
     name: 'Home',
+    meta: { title: '首页' },
     children: [
       {
-        path: 'login',
+        path: '/system',
         component: () =>
-          import(/* webpackChunkName: "login" */ '@/view/login/index.vue')
+          import(/* webpackChunkName: "login" */ '@/view/system/index.vue'),
+        meta: { title: '系统管理' }
+      },
+      {
+        path: '/accout',
+        component: () =>
+          import(/* webpackChunkName: "login" */ '@/view/accout/index.vue'),
+        meta: { title: '账号管理' },
+        children: [
+          {
+            path: '/accout/user',
+            component: () =>
+              import(
+                /* webpackChunkName: "login" */ '@/view/accout/user/index.vue'
+              ),
+            meta: { title: '用户管理' }
+          }
+        ]
       }
     ]
   }

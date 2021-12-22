@@ -15,7 +15,7 @@ import MyHeader from './component/Header.vue'
 import Main from './component/Main.vue'
 
 const collapse = ref(false)
-const handleChangeFlod = (flod) => {
+const handleChangeFlod = (flod:any) => {
   collapse.value = flod
 }
 </script>
