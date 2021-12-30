@@ -19,7 +19,10 @@
               <span>{{ item.title }}</span>
             </template>
             <template v-for="subItem in item.children" :key="subItem.index">
-              <el-menu-item :index="subItem.index">
+              <el-menu-item
+                :index="subItem.index"
+                @click="handleItemClick(subItem)"
+              >
                 <i :class="subItem.icon"></i>
                 <span>{{ subItem.title }}</span>
               </el-menu-item>
@@ -28,7 +31,11 @@
         </template>
         <!-- 只有一级菜单 -->
         <template v-else>
-          <el-menu-item :index="item.index" :key="item.index">
+          <el-menu-item
+            :index="item.index"
+            :key="item.index"
+            @click="handleItemClick(item)"
+          >
             <i :class="item.icon"></i>
             <span>{{ item.title }}</span>
           </el-menu-item>
@@ -43,6 +50,7 @@
  * el-sub-menu 一级菜单
  */
 import { defineComponent, ref, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
 export default defineComponent({
   props: {
@@ -52,6 +60,7 @@ export default defineComponent({
     }
   },
   setup() {
+    const router = useRouter()
     const items = [
       {
         icon: 'el-icon-menu',
@@ -76,8 +85,18 @@ export default defineComponent({
         title: '商品信息'
       }
     ]
+    // icon: "el-icon-menu"
+    // index: "/dashboard"
+    // title: "系统首页"
+    const handleItemClick = (menu: any) => {
+      console.log(menu, 6666)
+      router.push({
+        path: menu.index
+      })
+    }
     return {
-      items
+      items,
+      handleItemClick
     }
   }
 })

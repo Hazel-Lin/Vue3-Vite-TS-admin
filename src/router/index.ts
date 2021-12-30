@@ -10,7 +10,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 
 // RouteRecordRaw 路由记录
-const routes: RouteRecordRaw[] = [
+export const routes: RouteRecordRaw[] = [
   {
     path: '/',
     redirect: '/home'
@@ -30,20 +30,20 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/system',
         component: () =>
-          import(/* webpackChunkName: "login" */ '@/view/system/index.vue'),
+          import(/* webpackChunkName: "system" */ '@/view/system/index.vue'),
         meta: { title: '系统管理' }
       },
       {
         path: '/accout',
         component: () =>
-          import(/* webpackChunkName: "login" */ '@/view/accout/index.vue'),
+          import(/* webpackChunkName: "accout" */ '@/view/accout/index.vue'),
         meta: { title: '账号管理' },
         children: [
           {
             path: '/accout/user',
             component: () =>
               import(
-                /* webpackChunkName: "login" */ '@/view/accout/user/index.vue'
+                /* webpackChunkName: "accout" */ '@/view/accout/user/index.vue'
               ),
             meta: { title: '用户管理' }
           }

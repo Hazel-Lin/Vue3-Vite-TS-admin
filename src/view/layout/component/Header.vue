@@ -6,33 +6,19 @@
         @click="handleFold"
         class="menu-flod"
       ></i>
-    </div>
-    <div class="content-nav-head-right">
-      {{ breadcrumbList }}
-      <el-breadcrumb separator="/" v-if="breadcrumbList">
-        <template v-for="(item, index) in breadcrumbList" :key="index">
-          <!-- <el-breadcrumb-item>{{ item.meta.title }}</el-breadcrumb-item> -->
-          <el-breadcrumb-item>{{ item }}</el-breadcrumb-item>
+      <el-breadcrumb separator="/">
+        <template v-for="(item, index) in breadcrumbsList" :key="index">
+          <el-breadcrumb-item>{{ item.meta.title }}</el-breadcrumb-item>
         </template>
       </el-breadcrumb>
     </div>
+    <div class="content-nav-head-right"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineComponent, reactive, ref, computed, onMounted, watch } from 'vue'
-import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router'
-
-const router = useRouter()
-const route = useRoute()
-let breadcrumbList: any = ref([])
-
-watch(
-  () => route.path,
-  () => {
-    getBreadcrumb()
-  }
-)
+import { defineComponent, ref, computed, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
 const emit = defineEmits(['changeFlod'])
 const isFold = ref(false)
@@ -41,20 +27,23 @@ const handleFold = () => {
   console.log(isFold.value, 'isFold.value')
   emit('changeFlod', isFold.value)
 }
+
+const route = useRoute()
 onMounted(() => {
   getBreadcrumb()
 })
+
+const breadcrumbsList = ref([])
 const getBreadcrumb = () => {
-  let matched = route.matched.filter((item) => item.meta && item.meta.title)
-  let list = matched.filter(
-    (item) => item.meta && item.meta.title && item.meta.breadcrumb !== false
+  let matched: any = route.matched.filter(
+    (item) => item.meta && item.meta.title
   )
-  // breadcrumbList = matched.filter(
-  //   (item) => item.meta && item.meta.title && item.meta.breadcrumb !== false
-  breadcrumbList.value = list
-  // )
-  console.log(breadcrumbList.value[0], 'breadcrumbList')
+
+  breadcrumbsList.value = matched.filter(
+    (item:any) => item.meta && item.meta.title && item.meta.breadcrumb !== false
+  )
 }
+console.log(breadcrumbsList, 'breadcrumbsList---')
 </script>
 
 <style lang="scss">
