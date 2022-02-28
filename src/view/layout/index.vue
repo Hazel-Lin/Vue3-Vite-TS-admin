@@ -1,9 +1,11 @@
 <template>
   <el-container class="layout-contain">
-    <Aside :collapse="collapse" />
+    <el-aside :width="collapse ? '62px' : '210px'">
+      <Aside :collapse="collapse" :items="items"/>
+    </el-aside>
     <el-container class="content">
-      <el-header><my-header @changeFlod="handleChangeFlod" /></el-header>
-      <el-main><Main></Main></el-main>
+      <el-header><my-header @changeFlod="handleChangeFlod"></my-header></el-header>
+      <Main></Main>
     </el-container>
   </el-container>
 </template>
@@ -11,28 +13,38 @@
 <script setup lang="ts">
 import { defineComponent, ref } from 'vue'
 import Aside from './component/Aside.vue'
-import MyHeader from './component/Header.vue'
+import MyHeader from './component/MyHeader.vue'
 import Main from './component/Main.vue'
 
 const collapse = ref(false)
-const handleChangeFlod = (flod:any) => {
+const handleChangeFlod = (flod: any) => {
   collapse.value = flod
 }
+// 侧边导航栏时对应的路由
+const items = [
+  {
+    icon: 'el-icon-menu',
+    index: '/system',
+    title: '系统管理'
+  },
+  {
+    icon: 'el-icon-setting',
+    index: '/accout',
+    title: '账号管理',
+    children: [
+      {
+        icon: 'el-icon-user-solid',
+        index: '/accout/user',
+        title: '用户管理'
+      }
+    ]
+  }
+]
 </script>
 
 <style scoped>
 .layout-contain,
 .content {
-  width: 100%;
   height: 100%;
-}
-.el-header {
-  display: flex;
-  color: #333;
-  text-align: center;
-  align-items: center;
-  border: 1px solid red;
-  color: var(--el-text-color-primary);
-  line-height: 60px;
 }
 </style>

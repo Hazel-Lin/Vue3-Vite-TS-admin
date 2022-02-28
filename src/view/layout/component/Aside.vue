@@ -1,14 +1,19 @@
 <template>
   <div class="mainSide">
     <div class="logo">
-      <img class="img" src="@/assets/logo.png" alt="logo" />
+      <img class="img" src="@/assets/img/logo.png" alt="logo" />
       <span class="title" v-if="!collapse">Vue3Admin</span>
     </div>
+    {{ onRoutes }}
     <el-menu
       :collapse="collapse"
       background-color="#0c2135"
       text-color="#b7bdc3"
       active-text-color="#0a60bd"
+      class="mainSide-menu"
+      :collapse-transition="false"
+      :unique-opened="false"
+      :default-active="onRoutes"
     >
       <template v-for="item in items">
         <!-- 包含子菜单 -->
@@ -57,46 +62,31 @@ export default defineComponent({
     collapse: {
       type: Boolean,
       default: false
+    },
+    items: {
+      type: Array,
+      default: []
     }
   },
   setup() {
     const router = useRouter()
-    const items = [
-      {
-        icon: 'el-icon-menu',
-        index: '/dashboard',
-        title: '系统首页'
-      },
-      {
-        icon: 'el-icon-setting',
-        index: '/table',
-        title: '系统管理',
-        children: [
-          {
-            icon: 'el-icon-user-solid',
-            index: '/table',
-            title: '用户管理'
-          }
-        ]
-      },
-      {
-        icon: 'el-icon-goods',
-        index: '/tabs',
-        title: '商品信息'
-      }
-    ]
-    // icon: "el-icon-menu"
-    // index: "/dashboard"
-    // title: "系统首页"
+    const route = useRoute()
+    console.log(router, 'router')
+    console.log(route, 'route')
+
     const handleItemClick = (menu: any) => {
-      console.log(menu, 6666)
+      console.log(menu, 'menu-------')
+
       router.push({
         path: menu.index
       })
     }
+    const onRoutes = computed(() => {
+      return route.path
+    })
     return {
-      items,
-      handleItemClick
+      handleItemClick,
+      onRoutes
     }
   }
 })
@@ -106,18 +96,24 @@ export default defineComponent({
 .mainSide {
   background-color: #0c2135;
   height: 100%;
+  overflow: hidden;
+
+  .mainSide-menu {
+    width: 100%;
+    border-right: none; // 去除右边框 避免出现错位情况
+  }
 }
 // logo 布局
 .logo {
   display: flex;
   height: 50px;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 
   .img {
-    height: 100%;
     margin: 0 10px;
+    width: 35px;
   }
 
   .title {
@@ -130,8 +126,8 @@ export default defineComponent({
   text-align: center;
   line-height: 200px;
 }
-::v-deep .el-menu {
-  height: 100%;
-  border-right: none; // 去除右边框 避免出现错位情况
-}
+// ::v-deep .el-menu {
+//   height: 100%;
+//   border-right: none; // 去除右边框 避免出现错位情况
+// }
 </style>

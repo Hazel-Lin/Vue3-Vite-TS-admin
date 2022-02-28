@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <el-button type="primary">测试</el-button>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -14,5 +14,6 @@ export default defineComponent({})
 .main{
   background-color: #f0f0f0;
   height: 100%;
+  padding: 20px;
 }
 </style>

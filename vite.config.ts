@@ -12,5 +12,5 @@ const viteConfig: UserConfig = {
     plugins: [vue()],
     resolve: { alias },
 }
-// https://vitejs.dev/config/
+
 export default viteConfig

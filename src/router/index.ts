@@ -6,6 +6,7 @@
  * 静态 和 动态路由区别
  * 导航守卫处理
  * @ 标识符的定义
+ * 以下路由控制面包屑及地址栏中的url
  */
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 
@@ -18,7 +19,8 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/login',
     component: () =>
-      import(/* webpackChunkName: "login" */ '@/view/login/index.vue')
+      import(/* webpackChunkName: "login" */ '@/view/login/index.vue'),
+    meta: { title: '登录' },
   },
   {
     path: '/home',
@@ -50,7 +52,17 @@ export const routes: RouteRecordRaw[] = [
         ]
       }
     ]
-  }
+  },
+  {
+    path: '/404',
+    component: () =>
+      import(/* webpackChunkName: "404" */ '@/view/404.vue'),
+    name: '404',
+  },
+  {
+    path: '/:catchAll(.*)',
+    redirect: "/404",
+  },
 ]
 // 创建一个路由实例
 const router = createRouter({
@@ -59,6 +71,6 @@ const router = createRouter({
   routes // 应该添加到路由的初始路由列表。
 })
 // 路由守卫
-router.beforeEach((to, from) => {})
+router.beforeEach((to, from) => { })
 
 export default router
