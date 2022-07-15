@@ -22,7 +22,7 @@
           <span class="name">Hz Lin</span>
         </span>
         <template #dropdown>
-          <el-dropdown-menu>
+          <el-dropdown-menu @click="handleLogout">
             <el-dropdown-item command="退出系统">退出系统</el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -35,6 +35,8 @@
 import { defineComponent, ref, computed, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
+const route = useRoute()
+const router = useRouter()
 const emit = defineEmits(['changeFlod'])
 const circleUrl =
   'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
@@ -45,7 +47,6 @@ const handleFold = () => {
   emit('changeFlod', isFold.value)
 }
 
-const route = useRoute()
 onMounted(() => {
   getBreadcrumb()
   console.log(route,'route555');
@@ -73,6 +74,9 @@ const getBreadcrumb = () => {
 }
 const handleDropDownClick = () => {}
 const handleOpenMessage = () => {}
+const handleLogout = () => {
+  router.push('/login')
+}
 </script>
 
 <style lang="scss">

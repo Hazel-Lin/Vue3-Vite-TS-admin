@@ -50,6 +50,9 @@
 
 <script setup lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+
+const router = useRouter()
 
 const accountData = reactive({
   name: '',
@@ -63,12 +66,12 @@ const activeTabName = ref('first')
 const isRemember = ref(true)
 
 const loginRules = {
-  name: [{ required: true, message: '请输入账号~', trigger: 'change' }],
-  password: [{ required: true, message: '请输入密码~', triiger: 'change' }]
+  name: [{ required: true, message: '请输入账号', trigger: 'change' }],
+  password: [{ required: true, message: '请输入密码', triiger: 'change' }]
 }
-function resetAction() {
-  accountData.name = ''
-  accountData.password = ''
+
+const loginAction = () => {
+  router.push('/')
 }
 </script>
 
@@ -77,7 +80,7 @@ function resetAction() {
   display: flex;
   width: 100%;
   height: 100%;
-  background: url('../../assets/img/login-bg.png');
+  // background: url('../../assets/img/login-bg.png');
   background-size: cover;
   flex-direction: column;
   justify-content: center;

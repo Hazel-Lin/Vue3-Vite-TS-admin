@@ -1,4 +1,4 @@
-const TokenKey = 'Hz-Admin'
+const TokenKey = 'token'
 
 const getToken = function () {
   return localStorage.getItem(TokenKey)
