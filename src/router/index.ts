@@ -9,13 +9,10 @@
  * 以下路由控制面包屑及地址栏中的url
  */
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import Layout from '@/layout/index.vue';
 
 // RouteRecordRaw 路由记录
 export const routes: RouteRecordRaw[] = [
-  {
-    path: '/',
-    redirect: '/home'
-  },
   {
     path: '/login',
     component: () =>
@@ -23,33 +20,65 @@ export const routes: RouteRecordRaw[] = [
     meta: { title: '登录' },
   },
   {
+    path: '/',
+    component: Layout,
+    redirect: '/home'
+  },
+  {
     path: '/home',
-    component: () =>
-      import(/* webpackChunkName: "layout" */ '@/view/layout/index.vue'),
-    name: 'Home',
-    meta: { title: '首页' },
+    component: Layout,
+    redirect: '/home/index',
+    meta: { hidden: true, title: '首页' },
     children: [
       {
-        path: '/system',
+        path: 'index',
         component: () =>
-          import(/* webpackChunkName: "system" */ '@/view/system/index.vue'),
-        meta: { title: '系统管理' }
+          import(/* webpackChunkName: "home" */ '@/view/home/index.vue'),
+        name: 'Home',
+        meta: {
+          title: '首页',
+          icon: 'user',
+          noCache: true,
+        },
+      },
+    ],
+  },
+  {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/index',
+    children: [
+      {
+        path: 'index',
+        component: () =>
+        import(
+          /* webpackChunkName: "accout" */ '@/view/system/index.vue'
+        ),
+        name: 'System',
+        meta: { title: '系统管理', icon: 'table', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/accout',
+    component: Layout,
+    redirect: '/accout/index',
+    children: [
+      {
+        path: 'index',
+        component: () =>
+          import(
+            /* webpackChunkName: "accout" */ '@/view/accout/index.vue'
+          ),
+        meta: { title: '账号管理' }
       },
       {
-        path: '/accout',
+        path: '/accout/user',
         component: () =>
-          import(/* webpackChunkName: "accout" */ '@/view/accout/index.vue'),
-        meta: { title: '账号管理' },
-        children: [
-          {
-            path: '/accout/user',
-            component: () =>
-              import(
-                /* webpackChunkName: "accout" */ '@/view/accout/user/index.vue'
-              ),
-            meta: { title: '用户管理' }
-          }
-        ]
+          import(
+            /* webpackChunkName: "accout" */ '@/view/accout/user/index.vue'
+          ),
+        meta: { title: '用户管理' }
       }
     ]
   },

@@ -4,7 +4,6 @@
       <img class="img" src="@/assets/img/logo.png" alt="logo" />
       <span class="title" v-if="!collapse">Vue3Admin</span>
     </div>
-    {{ onRoutes }}
     <el-menu
       :collapse="collapse"
       background-color="#0c2135"
@@ -75,8 +74,6 @@ export default defineComponent({
     console.log(route, 'route')
 
     const handleItemClick = (menu: any) => {
-      console.log(menu, 'menu-------')
-
       router.push({
         path: menu.index
       })
