@@ -16,7 +16,7 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/login',
     component: () =>
-      import(/* webpackChunkName: "login" */ '@/view/login/index.vue'),
+      import(/* webpackChunkName: "login" */ '@/views/login/index.vue'),
     meta: { title: '登录' },
   },
   {
@@ -33,7 +33,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: 'index',
         component: () =>
-          import(/* webpackChunkName: "home" */ '@/view/home/index.vue'),
+          import(/* webpackChunkName: "home" */ '@/views/home/index.vue'),
         name: 'Home',
         meta: {
           title: '首页',
@@ -52,7 +52,7 @@ export const routes: RouteRecordRaw[] = [
         path: 'index',
         component: () =>
         import(
-          /* webpackChunkName: "accout" */ '@/view/system/index.vue'
+          /* webpackChunkName: "accout" */ '@/views/system/index.vue'
         ),
         name: 'System',
         meta: { title: '系统管理', icon: 'table', noCache: true }
@@ -68,7 +68,7 @@ export const routes: RouteRecordRaw[] = [
         path: 'index',
         component: () =>
           import(
-            /* webpackChunkName: "accout" */ '@/view/accout/index.vue'
+            /* webpackChunkName: "accout" */ '@/views/accout/index.vue'
           ),
         meta: { title: '账号管理' }
       },
@@ -76,7 +76,7 @@ export const routes: RouteRecordRaw[] = [
         path: '/accout/user',
         component: () =>
           import(
-            /* webpackChunkName: "accout" */ '@/view/accout/user/index.vue'
+            /* webpackChunkName: "accout" */ '@/views/accout/user/index.vue'
           ),
         meta: { title: '用户管理' }
       }
@@ -85,7 +85,7 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/404',
     component: () =>
-      import(/* webpackChunkName: "404" */ '@/view/404.vue'),
+      import(/* webpackChunkName: "404" */ '@/views/404.vue'),
     name: '404',
   },
   {
