@@ -49,7 +49,6 @@ const handleFold = () => {
 
 onMounted(() => {
   getBreadcrumb()
-  console.log(route,'route555');
 
 })
 // 监听路由变化 改变面包屑数组
@@ -57,7 +56,6 @@ watch(
   () => route.path,
   () => {
     getBreadcrumb()
-    console.log('路由变化')
   }
 )
 

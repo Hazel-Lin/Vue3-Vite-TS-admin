@@ -29,12 +29,12 @@ const items = [
   },
   {
     icon: 'el-icon-setting',
-    index: '/accout',
+    index: '/account',
     title: '账号管理',
     children: [
       {
         icon: 'el-icon-user-solid',
-        index: '/accout/user',
+        index: '/account/user',
         title: '用户管理'
       }
     ]

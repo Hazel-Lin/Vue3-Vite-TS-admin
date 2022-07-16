@@ -52,7 +52,7 @@ export const routes: RouteRecordRaw[] = [
         path: 'index',
         component: () =>
         import(
-          /* webpackChunkName: "accout" */ '@/views/system/index.vue'
+          /* webpackChunkName: "system" */ '@/views/system/index.vue'
         ),
         name: 'System',
         meta: { title: '系统管理', icon: 'table', noCache: true }
@@ -60,23 +60,23 @@ export const routes: RouteRecordRaw[] = [
     ]
   },
   {
-    path: '/accout',
+    path: '/account',
     component: Layout,
-    redirect: '/accout/index',
+    redirect: '/account/index',
     children: [
       {
         path: 'index',
         component: () =>
           import(
-            /* webpackChunkName: "accout" */ '@/views/accout/index.vue'
+            /* webpackChunkName: "account" */ '@/views/account/index.vue'
           ),
         meta: { title: '账号管理' }
       },
       {
-        path: '/accout/user',
+        path: '/account/user',
         component: () =>
           import(
-            /* webpackChunkName: "accout" */ '@/views/accout/user/index.vue'
+            /* webpackChunkName: "account" */ '@/views/account/user/index.vue'
           ),
         meta: { title: '用户管理' }
       }
@@ -95,11 +95,8 @@ export const routes: RouteRecordRaw[] = [
 ]
 // 创建一个路由实例
 const router = createRouter({
-  // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
   history: createWebHashHistory(),
-  routes // 应该添加到路由的初始路由列表。
+  routes 
 })
-// 路由守卫
-router.beforeEach((to, from) => { })
 
 export default router

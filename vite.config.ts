@@ -1,16 +1,18 @@
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import type { UserConfig } from 'vite'
-import { resolve } from 'path'
+import Vue from '@vitejs/plugin-vue'
+import path from 'path'
 
-// 配置别名
-const alias: Record<string, string> = {
-	'@': resolve('/src/')
-};
-const viteConfig: UserConfig = {
-    plugins: [vue(
-    )],
-    resolve: { alias },
-}
 
-export default viteConfig
+export default defineConfig({
+    plugins: [ 
+        Vue({
+            include: [/\.vue$/, /\.md$/],
+        })],
+    resolve: {
+        // 配置别名
+        alias: {
+          '@/': `${path.resolve(__dirname, 'src')}/`,
+        },
+    },
+})
+

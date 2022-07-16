@@ -22,7 +22,8 @@
   "devDependencies": {
     "@commitlint/cli": "^14.1.0",
     "@commitlint/config-conventional": "^14.1.0",
-    "@vitejs/plugin-vue": "^1.2.3",
+    "@types/node": "^18.0.5",
+    "@vitejs/plugin-vue": "^1.10.2",
     "@vue/compiler-sfc": "^3.0.5",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
