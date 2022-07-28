@@ -1,6 +1,6 @@
 import Request from "./request";
 
 export default new Request({
-  baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: '',
   timeout: 30000
 })
