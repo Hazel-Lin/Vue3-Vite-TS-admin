@@ -14,35 +14,37 @@
       :unique-opened="false"
       :default-active="onRoutes"
     >
-      <template v-for="item in items">
-        <!-- 包含子菜单 -->
-        <template v-if="item.children">
-          <el-submenu :index="item.index" :key="item.index">
-            <template #title>
-              <i :class="item.icon"></i>
-              <span>{{ item.title }}</span>
-            </template>
-            <template v-for="subItem in item.children" :key="subItem.index">
-              <el-menu-item
-                :index="subItem.index"
-                @click="handleItemClick(subItem)"
-              >
-                <i :class="subItem.icon"></i>
-                <span>{{ subItem.title }}</span>
-              </el-menu-item>
-            </template>
-          </el-submenu>
-        </template>
-        <!-- 只有一级菜单 -->
-        <template v-else>
-          <el-menu-item
-            :index="item.index"
-            :key="item.index"
-            @click="handleItemClick(item)"
-          >
-            <i :class="item.icon"></i>
-            <span>{{ item.title }}</span>
-          </el-menu-item>
+      <template v-for="item in routeList">
+        <template v-if="!item.hidden">
+          <!-- 包含子菜单 -->
+          <template v-if="item.children">
+            <el-submenu :index="(item.path)" >
+              <template #title>
+                <i :class="item.meta?.icon"></i>
+                <span>{{ item.meta?.title }}</span>
+              </template>
+              <template v-for="subItem in item.children">
+                <el-menu-item
+                  :index="subItem.path"
+                  @click="handleItemClick(subItem)"
+                >
+                  <i :class="subItem.meta?.icon"></i>
+                  <span>{{ subItem.meta?.title }}</span>
+                </el-menu-item>
+              </template>
+            </el-submenu>
+          </template>
+          <!-- 只有一级菜单 -->
+          <template v-else>
+            <el-menu-item
+              :index="item.path"
+
+              @click="handleItemClick(item)"
+            >
+              <i :class="item.meta?.icon"></i>
+              <span>{{ item.meta?.title }}</span>
+            </el-menu-item>
+          </template>
         </template>
       </template>
     </el-menu>
@@ -62,7 +64,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-    items: {
+    routeList: {
       type: Array,
       default: []
     }
@@ -70,8 +72,6 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const route = useRoute()
-    console.log(router, 'router')
-    console.log(route, 'route')
 
     const handleItemClick = (menu: any) => {
       router.push({

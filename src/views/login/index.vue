@@ -51,6 +51,7 @@
 <script setup lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { userStore } from '../../store/modules/user'
 
 const router = useRouter()
 
@@ -69,9 +70,10 @@ const loginRules = {
   name: [{ required: true, message: '请输入账号', trigger: 'change' }],
   password: [{ required: true, message: '请输入密码', triiger: 'change' }]
 }
-
+const user = userStore()
 const loginAction = () => {
   router.push('/')
+  const result = user.login()
 }
 </script>
 
