@@ -49,18 +49,25 @@ export const constantRoutes:any[] = [
   },
   {
     path: '/system',
-    component: () =>
-    import(
-      /* webpackChunkName: "system" */ '@/views/system/index.vue'
-    ),
-    redirect: '/system/index',
+    component: Layout,
+    redirect: 'noRedirect',
     name: 'System',
-    meta: { title: '系统管理', icon: 'el-icon-menu', noCache: true }
+    meta: { title: '系统配置', icon: 'el-icon-menu', noCache: true },
+    children: [
+      {
+        path: 'index',
+        component: () =>
+          import(
+            /* webpackChunkName: "account" */ '@/views/system/index.vue'
+          ),
+        meta: { title: '系统管理' },
+      },
+    ]
   },
   {
     path: '/account',
     component: Layout,
-    redirect: '/account/index',
+    redirect: 'noRedirect',
     meta: { title: '基础配置', icon: 'el-icon-setting' },
     children: [
       {

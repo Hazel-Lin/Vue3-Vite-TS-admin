@@ -38,7 +38,6 @@
           <template v-else>
             <el-menu-item
               :index="item.path"
-
               @click="handleItemClick(item)"
             >
               <i :class="item.meta?.icon"></i>
@@ -75,7 +74,7 @@ export default defineComponent({
 
     const handleItemClick = (menu: any) => {
       router.push({
-        path: menu.index
+        path: menu.path
       })
     }
     const onRoutes = computed(() => {
