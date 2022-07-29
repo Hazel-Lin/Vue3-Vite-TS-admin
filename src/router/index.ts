@@ -25,7 +25,6 @@ export const constantRoutes:any[] = [
     component: Layout,
     redirect: '/home',
     hidden: true,
-
   },
   {
     path: '/home',
@@ -60,14 +59,15 @@ export const constantRoutes:any[] = [
           import(
             /* webpackChunkName: "account" */ '@/views/system/index.vue'
           ),
-        meta: { title: '系统管理' },
+        meta: { title: '系统管理' ,icon: 'el-icon-menu'},
       },
     ]
   },
   {
-    path: '/account',
+    path: '/base',
     component: Layout,
     redirect: 'noRedirect',
+    name: 'Base',
     meta: { title: '基础配置', icon: 'el-icon-setting' },
     children: [
       {

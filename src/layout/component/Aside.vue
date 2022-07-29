@@ -2,90 +2,54 @@
   <div class="mainSide">
     <div class="logo">
       <img class="img" src="@/assets/img/logo.png" alt="logo" />
-      <span class="title" v-if="!collapse">Vue3Admin</span>
+      <span class="title" v-if="!isCollapse">Vue3Admin</span>
     </div>
-    <el-menu
-      :collapse="collapse"
-      background-color="#0c2135"
-      text-color="#b7bdc3"
-      active-text-color="#0a60bd"
-      class="mainSide-menu"
-      :collapse-transition="false"
-      :unique-opened="false"
-      :default-active="onRoutes"
-    >
-      <template v-for="item in routeList">
-        <template v-if="!item.hidden">
-          <!-- 包含子菜单 -->
-          <template v-if="item.children">
-            <el-submenu :index="(item.path)" >
-              <template #title>
-                <i :class="item.meta?.icon"></i>
-                <span>{{ item.meta?.title }}</span>
-              </template>
-              <template v-for="subItem in item.children">
-                <el-menu-item
-                  :index="subItem.path"
-                  @click="handleItemClick(subItem)"
-                >
-                  <i :class="subItem.meta?.icon"></i>
-                  <span>{{ subItem.meta?.title }}</span>
-                </el-menu-item>
-              </template>
-            </el-submenu>
-          </template>
-          <!-- 只有一级菜单 -->
-          <template v-else>
-            <el-menu-item
-              :index="item.path"
-              @click="handleItemClick(item)"
-            >
-              <i :class="item.meta?.icon"></i>
-              <span>{{ item.meta?.title }}</span>
-            </el-menu-item>
-          </template>
-        </template>
-      </template>
-    </el-menu>
+     <el-scrollbar wrap-class="scrollbar-wrapper">
+      <el-menu
+        :default-active="onRoutes"
+        :collapse="isCollapse"
+        background-color="#0c2135"
+        text-color="#b7bdc3"
+        :unique-opened="false"
+        active-text-color="#0a60bd"
+        class="mainSide-menu"
+        :collapse-transition="false"
+        mode="vertical"
+      >
+        <sidebar-item
+          v-for="route in routeList"
+          :key="route.path"
+          :item="route"
+          :base-path="route.path"
+        />
+      </el-menu>
+    </el-scrollbar>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 /**
  * el-sub-menu 一级菜单
  */
 import { defineComponent, ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import MyHeader from './component/MyHeader.vue'
+import { asyncRoutes, constantRoutes } from '../../router';
+import SidebarItem from './SidebarItem.vue'
 
-export default defineComponent({
-  props: {
-    collapse: {
-      type: Boolean,
-      default: false
-    },
-    routeList: {
-      type: Array,
-      default: []
-    }
-  },
-  setup() {
-    const router = useRouter()
-    const route = useRoute()
+const props = defineProps({
+  isCollapse: Boolean,
+});
+// 侧边导航栏时对应的路由
+const routeList:any = constantRoutes
+console.log(routeList,'routeList')
 
-    const handleItemClick = (menu: any) => {
-      router.push({
-        path: menu.path
-      })
-    }
-    const onRoutes = computed(() => {
-      return route.path
-    })
-    return {
-      handleItemClick,
-      onRoutes
-    }
-  }
+const route = useRoute()
+
+const onRoutes = computed(() => {
+  return route.path
 })
+
 </script>
 
 <style scoped lang='scss'>
