@@ -1,6 +1,6 @@
 <template>
   <el-container class="layout-contain">
-    <el-aside :width="isCollapse ? '62px' : '210px'">
+    <el-aside :width="isCollapse ? '64px' : '210px'">
       <Aside :isCollapse="isCollapse"/>
     </el-aside>
     <el-container class="content">
@@ -29,3 +29,4 @@ const handleChangeFlod = (flod: any) => {
   height: 100%;
 }
 </style>
+

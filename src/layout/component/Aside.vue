@@ -4,7 +4,7 @@
       <img class="img" src="@/assets/img/logo.png" alt="logo" />
       <span class="title" v-if="!isCollapse">Vue3Admin</span>
     </div>
-     <el-scrollbar wrap-class="scrollbar-wrapper">
+    <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="onRoutes"
         :collapse="isCollapse"
@@ -57,7 +57,6 @@ const onRoutes = computed(() => {
   background-color: #0c2135;
   height: 100%;
   overflow: hidden;
-
   .mainSide-menu {
     width: 100%;
     border-right: none; // 去除右边框 避免出现错位情况
@@ -70,7 +69,6 @@ const onRoutes = computed(() => {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
   .img {
     margin: 0 10px;
     width: 35px;
@@ -82,12 +80,20 @@ const onRoutes = computed(() => {
     color: white;
   }
 }
-.layout-aside {
-  text-align: center;
-  line-height: 200px;
+::v-deep .el-menu--collapse {
+  .el-submenu {
+    &>.el-submenu__title {
+      &>span {
+        height: 0;
+        width: 0;
+        overflow: hidden;
+        visibility: hidden;
+        display: inline-block;
+      }
+    }
+  }
 }
-// ::v-deep .el-menu {
-//   height: 100%;
-//   border-right: none; // 去除右边框 避免出现错位情况
-// }
+::v-deep .el-menu--collapse .el-menu-item span{
+  display: none;
+}
 </style>

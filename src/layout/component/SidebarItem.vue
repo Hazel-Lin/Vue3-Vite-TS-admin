@@ -12,7 +12,6 @@
       >
         <el-menu-item
           :index="resolvePath(onlyOneChild.path)"
-          style="text-decoration: none;"
         >
           <i :class="onlyOneChild.meta?.icon"></i>
           <span>{{ onlyOneChild.meta?.title }}</span>
