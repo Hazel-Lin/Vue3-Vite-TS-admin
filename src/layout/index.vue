@@ -18,7 +18,7 @@ import Main from './component/Main.vue'
 
 
 const isCollapse = ref(false)
-const handleChangeFlod = (flod: any) => {
+const handleChangeFlod = (flod: boolean) => {
   isCollapse.value = flod
 }
 </script>

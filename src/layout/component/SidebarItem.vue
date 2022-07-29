@@ -1,6 +1,6 @@
 <template>
-  <div v-if="!item.hidden">
-   <template
+  <template v-if="!item.hidden">
+    <template
       v-if="
         hasOneShowingChild(item.children, item) &&
           (!onlyOneChild.children || onlyOneChild.noShowingChildren)
@@ -18,7 +18,7 @@
         </el-menu-item>
       </Link>
     </template>
-     <el-submenu
+    <el-submenu
       v-else
       ref="subMenu"
       :index="(item.path)"
@@ -36,7 +36,7 @@
         :base-path="resolvePath(child.path)"
       />
     </el-submenu>
-  </div>
+  </template>
 </template>
 
 <script setup lang="ts">

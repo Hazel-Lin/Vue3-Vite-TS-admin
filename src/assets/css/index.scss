@@ -32,3 +32,10 @@ body,
 	width: 24px;
 	text-align: center;
 }
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
