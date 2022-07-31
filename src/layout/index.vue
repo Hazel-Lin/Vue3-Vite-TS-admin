@@ -4,7 +4,10 @@
       <Aside :isCollapse="isCollapse"/>
     </el-aside>
     <el-container class="content">
-      <el-header><my-header @changeFlod="handleChangeFlod"></my-header></el-header>
+      <el-header>
+        <my-header @changeFlod="handleChangeFlod"></my-header>
+      </el-header>
+      <tags-view/>
       <Main></Main>
     </el-container>
   </el-container>
@@ -15,6 +18,7 @@ import { defineComponent, ref } from 'vue'
 import Aside from './component/Aside.vue'
 import MyHeader from './component/MyHeader.vue'
 import Main from './component/Main.vue'
+import TagsView from './component/TagsView.vue'
 
 
 const isCollapse = ref(false)
