@@ -80,7 +80,7 @@ const onRoutes = computed(() => {
     color: white;
   }
 }
-::v-deep .el-menu--collapse .el-menu-item span{
+:deep(.el-menu--collapse .el-menu-item span){
   height: 0;
   width: 0;
   overflow: hidden;
