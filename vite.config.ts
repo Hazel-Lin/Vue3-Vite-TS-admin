@@ -1,13 +1,16 @@
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import path from 'path'
+import DefineOptions from "unplugin-vue-define-options/vite";
 
 
 export default defineConfig({
     plugins: [
-        Vue({
-            include: [/\.vue$/, /\.md$/],
-        })],
+      Vue({
+          include: [/\.vue$/, /\.md$/],
+      }),
+      DefineOptions()
+    ],
     resolve: {
         // 配置别名
         alias: {

@@ -12,7 +12,13 @@
     "lib": ["esnext", "dom"],
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "types": [
+      "node",
+      "vite/client",
+      "element-plus/global",
+      "unplugin-vue-define-options", // 避免引用defineOptions时报错
+    ],
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
