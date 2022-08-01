@@ -33,7 +33,7 @@
  */
 import { defineComponent, ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import MyHeader from './component/MyHeader.vue'
+import MyHeader from './MyHeader.vue'
 import { asyncRoutes, constantRoutes } from '../../router';
 import SidebarItem from './SidebarItem.vue'
 

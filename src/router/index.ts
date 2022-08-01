@@ -55,11 +55,12 @@ export const constantRoutes:any[] = [
     children: [
       {
         path: 'index',
+        name:'Menu',
         component: () =>
           import(
             /* webpackChunkName: "account" */ '@/views/system/index.vue'
           ),
-        meta: { title: '系统管理' ,icon: 'el-icon-menu'},
+        meta: { title: '菜单管理' ,icon: 'el-icon-menu'},
       },
     ]
   },
@@ -72,6 +73,7 @@ export const constantRoutes:any[] = [
     children: [
       {
         path: 'index',
+        name:'Account',
         component: () =>
           import(
             /* webpackChunkName: "account" */ '@/views/account/index.vue'
@@ -80,6 +82,7 @@ export const constantRoutes:any[] = [
       },
       {
         path: 'user',
+        name:'User',
         component: () =>
           import(
             /* webpackChunkName: "account" */ '@/views/account/user/index.vue'
