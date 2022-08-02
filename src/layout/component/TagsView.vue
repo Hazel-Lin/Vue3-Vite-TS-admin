@@ -84,8 +84,10 @@ watch(
 watch(
   ()=> route.path,
   () => {
+    if(constantRoutes.includes(route.path)){
       addTags();
       moveToCurrentTag();
+    }
   }
 )
 // 初始化标签
@@ -129,11 +131,10 @@ const filterAffixTags = (routes, basePath = '/')  => {
 }
 const addTags = ()  =>{
   const { name } = route;
-
-      if (name) {
-        useTagsViewStore().addView(route);
-      }
-      return false;
+  if (name) {
+    useTagsViewStore().addView(route);
+  }
+  return false;
 }
 const isActive = (view:any) =>{
       return view.path === route.path;

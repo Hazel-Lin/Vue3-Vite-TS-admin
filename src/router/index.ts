@@ -97,17 +97,11 @@ export const constantRoutes:any[] = [
     ]
   },
   {
-    path: '/404',
-    component: () =>
-      import(/* webpackChunkName: "404" */ '@/views/404.vue'),
+    path: '/:pathMatch(.*)*',
     name: '404',
-    hidden: true
-  },
-  {
-    path: '/:catchAll(.*)',
-    redirect: "/404",
-    hidden: true
-  },
+    component: () =>
+        import(/* webpackChunkName: "404" */ '@/views/404.vue'),
+  }
 ]
 function compare(property:any) {
   return function(a:any, b:any) {
