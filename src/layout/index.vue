@@ -31,6 +31,7 @@ const handleChangeFlod = (flod: boolean) => {
 .layout-contain,
 .content {
   height: 100%;
+  position: relative;
 }
 </style>
 
