@@ -1,3 +1,15 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+
+defineOptions({
+  name: 'Page404',
+
+})
+const message = computed(() => {
+  return 'The webmaster said that you can not enter this page...'
+})
+</script>
+
 <template>
   <div class="wscn-http404-container">
     <div class="wscn-http404">
@@ -49,18 +61,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { computed } from "vue";
-
-defineOptions({
-  name: 'Page404',
-
-})
-const message = computed(()=>{
-  return 'The webmaster said that you can not enter this page...';
-})
-</script>
 
 <style lang="scss" scoped>
 .wscn-http404-container {

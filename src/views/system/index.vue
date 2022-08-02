@@ -1,29 +1,9 @@
-<template>
-  <div class="system-content">
-    <my-search
-      :formData="systemData"
-      :labelWidth="labelWidth"
-      :isShowDefaultBtns="isShowDefaultBtns"
-    >
-      <template #title>
-        <div>系统管理筛选项</div>
-      </template>
-      <template #footer>
-        <el-button type="primary">导入</el-button>
-        <el-button type="primary">导出</el-button>
-      </template>
-    </my-search>
-
-    <my-content></my-content>
-  </div>
-</template>
-
 <script setup lang="ts">
-import { defineComponent, ref, computed, onMounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { computed, defineComponent, onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { systemData } from './systemData'
 import mySearch from '@/components/my-search.vue'
 import myContent from '@/components/my-content.vue'
-import { systemData } from './systemData'
 
 const labelWidth = '80px'
 // 是否展示默认的查询和清空按钮
@@ -31,22 +11,46 @@ const isShowDefaultBtns = true
 const list = [
   {
     id: 1,
-    name: '李磊'
+    name: '李磊',
   },
   {
     id: 2,
-    name: '王明'
+    name: '王明',
   },
   {
     id: 3,
-    name: '陈故'
-  }
+    name: '陈故',
+  },
 ]
 const tableData = ref([])
 onMounted(() => {
   tableData.value = list
 })
 </script>
+
+<template>
+  <div class="system-content">
+    <my-search
+      :form-data="systemData"
+      :label-width="labelWidth"
+      :is-show-default-btns="isShowDefaultBtns"
+    >
+      <template #title>
+        <div>系统管理筛选项</div>
+      </template>
+      <template #footer>
+        <el-button type="primary">
+          导入
+        </el-button>
+        <el-button type="primary">
+          导出
+        </el-button>
+      </template>
+    </my-search>
+
+    <my-content />
+  </div>
+</template>
 
 <style lang="scss">
 .system-content {
