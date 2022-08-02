@@ -1,14 +1,14 @@
-<template>
-  <div class="main">
-    <router-view></router-view>
-  </div>
-</template>
-
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 
 export default defineComponent({})
 </script>
+
+<template>
+  <div class="main">
+    <router-view />
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .main{

@@ -1,8 +1,31 @@
+<script setup lang="ts">
+/**
+ * el-sub-menu 一级菜单
+ */
+import { computed, defineComponent, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { asyncRoutes, constantRoutes } from '../../router'
+import SidebarItem from './SidebarItem.vue'
+
+const props = defineProps({
+  isCollapse: Boolean,
+})
+// 侧边导航栏时对应的路由
+const routeList: any = constantRoutes
+console.log(routeList, 'routeList')
+
+const route = useRoute()
+
+const onRoutes = computed(() => {
+  return route.path
+})
+</script>
+
 <template>
-  <div class="mainSide">
-    <div class="logo">
-      <img class="img" src="@/assets/img/logo.png" alt="logo" />
-      <span class="title" v-if="!isCollapse">Vue3Admin</span>
+  <div class="bg-#0c2135 h-100% overflow-hidden">
+    <div flex h50px justify-center items-center flex-row>
+      <img w-35px mx10px src="@/assets/img/logo.png" alt="logo">
+      <span v-if="!isCollapse" fw700 text-16px text-white>Vue3Admin</span>
     </div>
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
@@ -12,74 +35,23 @@
         text-color="#b7bdc3"
         :unique-opened="false"
         active-text-color="#0a60bd"
-        class="mainSide-menu"
+        class="w-100%"
+        border-r-none
         :collapse-transition="false"
         mode="vertical"
       >
-        <sidebar-item
-          v-for="route in routeList"
-          :key="route.path"
-          :item="route"
-          :base-path="route.path"
+        <SidebarItem
+          v-for="routeItem in routeList"
+          :key="routeItem.path"
+          :item="routeItem"
+          :base-path="routeItem.path"
         />
       </el-menu>
     </el-scrollbar>
   </div>
 </template>
 
-<script setup lang="ts">
-/**
- * el-sub-menu 一级菜单
- */
-import { defineComponent, ref, computed } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import MyHeader from './MyHeader.vue'
-import { asyncRoutes, constantRoutes } from '../../router';
-import SidebarItem from './SidebarItem.vue'
-
-const props = defineProps({
-  isCollapse: Boolean,
-});
-// 侧边导航栏时对应的路由
-const routeList:any = constantRoutes
-console.log(routeList,'routeList')
-
-const route = useRoute()
-
-const onRoutes = computed(() => {
-  return route.path
-})
-
-</script>
-
 <style scoped lang='scss'>
-.mainSide {
-  background-color: #0c2135;
-  height: 100%;
-  overflow: hidden;
-  .mainSide-menu {
-    width: 100%;
-    border-right: none; // 去除右边框 避免出现错位情况
-  }
-}
-// logo 布局
-.logo {
-  display: flex;
-  height: 50px;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  .img {
-    margin: 0 10px;
-    width: 35px;
-  }
-
-  .title {
-    font-size: 16px;
-    font-weight: 700;
-    color: white;
-  }
-}
 :deep(.el-menu--collapse .el-menu-item span){
   height: 0;
   width: 0;

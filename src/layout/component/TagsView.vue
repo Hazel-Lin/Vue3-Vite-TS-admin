@@ -1,3 +1,175 @@
+<script setup lang="ts">
+import path from 'path'
+import {
+  computed,
+  defineComponent,
+  getCurrentInstance,
+  nextTick,
+  onMounted,
+  ref,
+  watch,
+} from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { constantRoutes } from '../../router'
+import ScrollPane from './ScrollPane.vue'
+import { useTagsViewStore } from '@/store/modules/tagsView'
+
+const route = useRoute()
+const router = useRouter()
+const instance = getCurrentInstance()
+const { proxy } = instance as any
+const visible = ref(false)
+const top = ref(0)
+const buttonLeft = ref(0)
+const selectedTag = ref({})
+const affixTags = ref([])
+const filterAffixTags = (routes: any, basePath = '/') => {
+  let tags: any = []
+  routes.forEach((route: any) => {
+    if (route.meta && route.meta.affix) {
+      const tagPath = path.resolve(basePath, route.path)
+      tags.push({
+        fullPath: tagPath,
+        path: tagPath,
+        name: route.name,
+        meta: { ...route.meta },
+      })
+    }
+    if (route.children) {
+      const tempTags = filterAffixTags(route.children, route.path)
+      if (tempTags.length >= 1)
+        tags = [...tags, ...tempTags]
+    }
+  })
+  return tags
+}
+const addTags = () => {
+  const { name } = route
+  if (name && name !== '404')
+    useTagsViewStore().addView(route)
+
+  return false
+}
+const initTags = () => {
+  const affixTagsList = (affixTags.value = filterAffixTags(routes.value))
+  for (const tag of affixTagsList) {
+    // Must have tag name
+    if (tag.name)
+      useTagsViewStore().addVisitedView(tag)
+  }
+}
+onMounted(() => {
+  initTags()
+  addTags()
+})
+
+const closeMenu = () => {
+  visible.value = false
+}
+const moveToCurrentTag = () => {
+  const tags = instance?.refs.tag as any[]
+  nextTick(() => {
+    // 解决tags is not iterable报错
+    if (tags === null || tags === undefined || !Array.isArray(tags))
+      return
+    for (const tag of tags) {
+      if (tag.to.path === route.path) {
+        proxy.$refs.scrollPane.moveToTarget(tag)
+        if (tag.to.fullPath !== route.fullPath)
+          useTagsViewStore().updateVisitedView(route)
+
+        break
+      }
+    }
+  })
+}
+watch(
+  () => visible.value,
+  (val) => {
+    if (val)
+      document.body.addEventListener('click', closeMenu)
+    else
+      document.body.removeEventListener('click', closeMenu)
+  },
+)
+watch(
+  () => route.path,
+  () => {
+    addTags()
+    moveToCurrentTag()
+  },
+)
+// 初始化标签
+const visitedViews = computed(() => {
+  return useTagsViewStore().visitedViews
+})
+
+const routes = computed(() => {
+  return constantRoutes
+})
+
+const isActive = (view: any) => {
+  return view.path === route.path
+}
+const isAffix = (tag: any) => {
+  return tag.meta && tag.meta.affix
+}
+
+const toLastView = (visitedViews: any, view: any) => {
+  const latestView = visitedViews.slice(-1)[0]
+  if (latestView) {
+    router.push(latestView.fullPath)
+  }
+  else {
+    if (view.name === 'Home') {
+      // to reload home page
+      router.replace({ path: `/redirect${view.fullPath}` }).catch((err) => {
+        console.warn(err)
+      })
+    }
+    else {
+      router.push('/')
+    }
+  }
+}
+const closeSelectedTag = (view: any) => {
+  useTagsViewStore().delView(view).then(({ visitedViews }: any) => {
+    if (isActive(view))
+      toLastView(visitedViews, view)
+  })
+}
+const openMenu = (tag: any, e: any) => {
+  const menuMinWidth = 105
+  const offsetLeft = proxy.$el.getBoundingClientRect().left // container margin left
+  const offsetWidth = proxy.$el.offsetWidth // container width
+  const maxLeft = offsetWidth - menuMinWidth // left boundary
+  const left = e.clientX - offsetLeft + 15 // 15: margin right
+
+  buttonLeft.value = left > maxLeft ? maxLeft : left
+  top.value = e.clientY
+  visible.value = true
+  selectedTag.value = tag
+}
+
+const handleScroll = () => {
+  closeMenu()
+}
+const closeAllTags = (view: any) => {
+  useTagsViewStore().delAllViews().then(({ visitedViews }: any) => {
+    if (affixTags.value.some((tag: any) => tag.path === view.path))
+      return
+
+    toLastView(visitedViews, view)
+  })
+}
+const closeOthersTags = () => {
+  router.push(selectedTag.value)
+  useTagsViewStore().delOthersViews(selectedTag.value).then(() => {
+    moveToCurrentTag()
+  })
+}
+</script>
+
 <template>
   <div
     id="tags-view-container"
@@ -8,12 +180,11 @@
       class="tags-view-wrapper"
       @scroll="handleScroll"
     >
-
       <router-link
         v-for="tag in visitedViews"
         ref="tag"
-        :class="isActive(tag) ? 'active' : ''"
         :key="tag.path"
+        :class="isActive(tag) ? 'active' : ''"
         :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
         class="tags-view-item"
         tag="span"
@@ -30,190 +201,18 @@
     </ScrollPane>
     <ul
       v-show="visible"
-      :style="{ left: buttonLeft + 'px', top: top + 'px' }"
+      :style="{ left: `${buttonLeft}px`, top: `${top}px` }"
       class="contextmenu"
     >
       <li @click="closeOthersTags">
         关闭其他
       </li>
-      <li @click="closeAllTags(selectedTag)">关闭所有</li>
+      <li @click="closeAllTags(selectedTag)">
+        关闭所有
+      </li>
     </ul>
   </div>
 </template>
-
-<script setup lang="ts">
-import {
-computed,
-defineComponent,
-getCurrentInstance,
-onMounted,
-ref,
-watch,
-nextTick
-} from 'vue'
-import ScrollPane from './ScrollPane.vue';
-import { useRouter, useRoute } from 'vue-router';
-import { constantRoutes } from '../../router';
-import {useTagsViewStore} from '@/store/modules/tagsView';
-import path from 'path';
-
-onMounted(() =>{
-  initTags()
-  addTags()
-})
-const route = useRoute()
-const router = useRouter()
-const instance = getCurrentInstance()
-const { proxy } = instance as any
-const visible = ref(false)
-const top = ref(0)
-const buttonLeft = ref(0)
-const selectedTag = ref({})
-const affixTags = ref([])
-
-watch(
-  () => visible.value,
-  val => {
-    if (val) {
-      document.body.addEventListener("click", closeMenu);
-    } else {
-      document.body.removeEventListener("click", closeMenu);
-    }
-  }
-)
-watch(
-  ()=> route.path,
-  () => {
-    if(constantRoutes.includes(route.path)){
-      addTags();
-      moveToCurrentTag();
-    }
-  }
-)
-// 初始化标签
-const visitedViews = computed(()=>{
-  return useTagsViewStore().visitedViews;
-})
-
-const routes = computed(()=>{
-  return constantRoutes;
-})
-
-const initTags = ()  =>{
- const affixTagsList = (affixTags.value = filterAffixTags(routes.value));
-      for (const tag of affixTagsList) {
-        // Must have tag name
-        if (tag.name) {
-          useTagsViewStore().addVisitedView(tag);
-        }
-      }
-}
-const filterAffixTags = (routes, basePath = '/')  => {
-      let tags:any = [];
-      routes.forEach((route:any) => {
-        if (route.meta && route.meta.affix) {
-          const tagPath = path.resolve(basePath, route.path);
-          tags.push({
-            fullPath: tagPath,
-            path: tagPath,
-            name: route.name,
-            meta: { ...route.meta }
-          });
-        }
-        if (route.children) {
-          const tempTags = filterAffixTags(route.children, route.path);
-          if (tempTags.length >= 1) {
-            tags = [...tags, ...tempTags];
-          }
-        }
-      });
-      return tags;
-}
-const addTags = ()  =>{
-  const { name } = route;
-  if (name) {
-    useTagsViewStore().addView(route);
-  }
-  return false;
-}
-const isActive = (view:any) =>{
-      return view.path === route.path;
-}
- const isAffix = (tag:any) => {
-      return tag.meta && tag.meta.affix;
-    }
-const closeSelectedTag = (view:any)=>{
-  useTagsViewStore().delView(view).then(({visitedViews}:any) => {
-    if (isActive(view)) {
-      toLastView(visitedViews, view);
-    }
-  });
-}
-const toLastView = (visitedViews:any, view:any) =>{
-  const latestView = visitedViews.slice(-1)[0];
-  if (latestView) {
-    router.push(latestView.fullPath);
-  } else {
-    if (view.name === 'Home') {
-      // to reload home page
-      router.replace({ path: '/redirect' + view.fullPath }).catch(err => {
-        console.warn(err)
-      });
-    } else {
-      router.push('/');
-    }
-  }
-}
-const openMenu = (tag:any, e:any)  =>{
-  const menuMinWidth = 105;
-  const offsetLeft = proxy.$el.getBoundingClientRect().left; // container margin left
-  const offsetWidth = proxy.$el.offsetWidth; // container width
-  const maxLeft = offsetWidth - menuMinWidth; // left boundary
-  const left = e.clientX - offsetLeft + 15; // 15: margin right
-
-  buttonLeft.value =  left > maxLeft ? maxLeft : left;
-  top.value = e.clientY;
-  visible.value = true;
-  selectedTag.value = tag;
-}
-const moveToCurrentTag = () => {
-  const tags = instance?.refs.tag as any[]
-  nextTick(() => {
-    // 解决tags is not iterable报错
-      if (tags === null || tags === undefined || !Array.isArray(tags)) return
-      for (const tag of tags) {
-      if (tag.to.path === route.path) {
-        proxy.$refs.scrollPane.moveToTarget(tag);
-        if (tag.to.fullPath !== route.fullPath) {
-          useTagsViewStore().updateVisitedView(route);
-        }
-        break;
-      }
-    }
-})
-}
-const closeMenu = ()=>{
-  visible.value = false;
-}
-const handleScroll = ()=>{
-  closeMenu()
-}
-const closeAllTags= (view:any)=> {
-  useTagsViewStore().delAllViews().then(({visitedViews}:any)=> {
-    if (affixTags.value.some((tag:any) => tag.path === view.path)) {
-      return;
-    }
-      toLastView(visitedViews, view);
-  });
-}
-const closeOthersTags = ()=> {
-  router.push(selectedTag.value);
-  useTagsViewStore().delOthersViews(selectedTag.value).then(()=>{
-    moveToCurrentTag();
-  });
-}
-
-</script>
 
 <style lang="scss" scoped>
 .tags-view-container {
