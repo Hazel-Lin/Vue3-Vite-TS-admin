@@ -32,7 +32,6 @@ export const useTagsViewStore = defineStore({
           title
         })
       );
-      console.log('visitedViews000000', this.visitedViews);
 
     },
 
@@ -98,7 +97,6 @@ export const useTagsViewStore = defineStore({
     if (index > -1) {
       this.cachedViews = this.cachedViews.slice(index, index + 1);
     } else {
-      // if index = -1, there is no cached tags
       this.cachedViews = [];
     }
         resolve([...this.cachedViews]);
@@ -195,7 +193,7 @@ export const useTagsViewStore = defineStore({
     },
 
     // 关闭所有
-    delAllViews(view:any) {
+    delAllViews() {
       return new Promise(resolve => {
         this.delAllVisitedViews();
         this.delAllCachedViews();

@@ -14,9 +14,7 @@ defineOptions({
   name: "ScrollPane"
 });
 const tagAndTagSpacing = 4;
-const left = ref(0)
 const instance:any = getCurrentInstance()
-console.log('instance',instance);
 
 const scrollWrapper: any = computed(()=>{
   return instance.refs.scrollContainer.$refs?.wrap;

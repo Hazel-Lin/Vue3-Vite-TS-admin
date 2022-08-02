@@ -14,6 +14,17 @@ import Layout from '@/layout/index.vue';
 // RouteRecordRaw 路由记录
 export const constantRoutes:any[] = [
   {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        component: () => import('@/views/redirect/index.vue')
+      }
+    ]
+  },
+  {
     path: '/login',
     component: () =>
       import(/* webpackChunkName: "login" */ '@/views/login/index.vue'),
@@ -25,16 +36,10 @@ export const constantRoutes:any[] = [
     component: Layout,
     redirect: '/home',
     hidden: true,
-  },
-  {
-    path: '/home',
-    component: Layout,
-    redirect: '/home/index',
-    hidden: true,
     meta: { title: '首页' },
     children: [
       {
-        path: 'index',
+        path: 'home',
         component: () =>
           import(/* webpackChunkName: "home" */ '@/views/home/index.vue'),
         name: 'Home',

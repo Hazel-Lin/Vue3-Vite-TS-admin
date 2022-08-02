@@ -3,7 +3,7 @@
     id="tags-view-container"
     class="tags-view-container"
   >
-    <scroll-pane
+    <ScrollPane
       ref="scrollPane"
       class="tags-view-wrapper"
       @scroll="handleScroll"
@@ -27,21 +27,16 @@
           @click.prevent.stop="closeSelectedTag(tag)"
         />
       </router-link>
-    </scroll-pane>
-     <ul
+    </ScrollPane>
+    <ul
       v-show="visible"
       :style="{ left: buttonLeft + 'px', top: top + 'px' }"
       class="contextmenu"
     >
-      <li @click="closeLeftTags">
-        关闭左侧
-      </li>
-      <li @click="closeRightTags">
-        关闭右侧
-      </li>
       <li @click="closeOthersTags">
         关闭其他
       </li>
+      <li @click="closeAllTags(selectedTag)">关闭所有</li>
     </ul>
   </div>
 </template>
@@ -67,11 +62,9 @@ onMounted(() =>{
   addTags()
 })
 const route = useRoute()
-console.log(route,'route')
 const router = useRouter()
 const instance = getCurrentInstance()
 const { proxy } = instance as any
-console.log('proxy',proxy);
 const visible = ref(false)
 const top = ref(0)
 const buttonLeft = ref(0)
@@ -91,7 +84,6 @@ watch(
 watch(
   ()=> route.path,
   () => {
-    console.log('路由变化---')
       addTags();
       moveToCurrentTag();
   }
@@ -100,9 +92,6 @@ watch(
 const visitedViews = computed(()=>{
   return useTagsViewStore().visitedViews;
 })
-console.log('visitedViews',visitedViews);
-
-
 
 const routes = computed(()=>{
   return constantRoutes;
@@ -146,28 +135,29 @@ const addTags = ()  =>{
       }
       return false;
 }
-const isActive = (view) =>{
+const isActive = (view:any) =>{
       return view.path === route.path;
 }
- const isAffix = (tag) => {
+ const isAffix = (tag:any) => {
       return tag.meta && tag.meta.affix;
     }
 const closeSelectedTag = (view:any)=>{
-  useTagsViewStore().delView(view).then(({ visitedViews }) => {
+  useTagsViewStore().delView(view).then(({visitedViews}:any) => {
     if (isActive(view)) {
       toLastView(visitedViews, view);
     }
   });
 }
-const toLastView = (visitedViews, view) =>{
+const toLastView = (visitedViews:any, view:any) =>{
   const latestView = visitedViews.slice(-1)[0];
   if (latestView) {
     router.push(latestView.fullPath);
   } else {
-    console.log('view.name', view.name);
-    if (view.name === 'MyAccount') {
+    if (view.name === 'Home') {
       // to reload home page
-      router.replace({ path: '/redirect' + view.fullPath });
+      router.replace({ path: '/redirect' + view.fullPath }).catch(err => {
+        console.warn(err)
+      });
     } else {
       router.push('/');
     }
@@ -211,21 +201,17 @@ const closeMenu = ()=>{
 const handleScroll = ()=>{
   closeMenu()
 }
-const closeLeftTags= ()=> {
-  router.push(selectedTag);
-  useTagsViewStore().delLeftViews(selectedTag).then(()=>{
-    moveToCurrentTag();
+const closeAllTags= (view:any)=> {
+  useTagsViewStore().delAllViews().then(({visitedViews}:any)=> {
+    if (affixTags.value.some((tag:any) => tag.path === view.path)) {
+          return;
+    }
+        toLastView(visitedViews, view);
   });
 }
-const closeRightTags= ()=> {
-  router.push(selectedTag);
-   useTagsViewStore().delRightViews(selectedTag).then(()=>{
-    moveToCurrentTag();
-  });
-}
-const closeOthersTags= ()=> {
-  router.push(selectedTag);
-  useTagsViewStore().delOthersViews(selectedTag).then(()=>{
+const closeOthersTags = ()=> {
+  router.push(selectedTag.value);
+  useTagsViewStore().delOthersViews(selectedTag.value).then(()=>{
     moveToCurrentTag();
   });
 }
@@ -236,6 +222,7 @@ const closeOthersTags= ()=> {
 .tags-view-container {
   display: flex;
   white-space: nowrap;
+  height: 34px;
   width: 100%;
   background: #fff;
   border-bottom: 1px solid #d8dce5;
@@ -331,5 +318,3 @@ const closeOthersTags= ()=> {
   }
 }
 </style>
-
-
