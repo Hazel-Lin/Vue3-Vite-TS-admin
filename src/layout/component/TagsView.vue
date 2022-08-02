@@ -170,30 +170,26 @@ const openMenu = (tag:any, e:any)  =>{
   const maxLeft = offsetWidth - menuMinWidth; // left boundary
   const left = e.clientX - offsetLeft + 15; // 15: margin right
 
-  if (left > maxLeft) {
-    buttonLeft.value = maxLeft;
-  } else {
-    buttonLeft.value = left;
-  }
+  buttonLeft.value =  left > maxLeft ? maxLeft : left;
   top.value = e.clientY;
   visible.value = true;
   selectedTag.value = tag;
 }
 const moveToCurrentTag = () => {
-      const tags = instance?.refs.tag as any[]
-      nextTick(() => {
-        // 解决tags is not iterable报错
-         if (tags === null || tags === undefined || !Array.isArray(tags)) return
-         for (const tag of tags) {
-          if (tag.to.path === route.path) {
-            proxy.$refs.scrollPane.moveToTarget(tag);
-            if (tag.to.fullPath !== route.fullPath) {
-              useTagsViewStore().updateVisitedView(route);
-            }
-            break;
-          }
+  const tags = instance?.refs.tag as any[]
+  nextTick(() => {
+    // 解决tags is not iterable报错
+      if (tags === null || tags === undefined || !Array.isArray(tags)) return
+      for (const tag of tags) {
+      if (tag.to.path === route.path) {
+        proxy.$refs.scrollPane.moveToTarget(tag);
+        if (tag.to.fullPath !== route.fullPath) {
+          useTagsViewStore().updateVisitedView(route);
         }
-    })
+        break;
+      }
+    }
+})
 }
 const closeMenu = ()=>{
   visible.value = false;
@@ -204,9 +200,9 @@ const handleScroll = ()=>{
 const closeAllTags= (view:any)=> {
   useTagsViewStore().delAllViews().then(({visitedViews}:any)=> {
     if (affixTags.value.some((tag:any) => tag.path === view.path)) {
-          return;
+      return;
     }
-        toLastView(visitedViews, view);
+      toLastView(visitedViews, view);
   });
 }
 const closeOthersTags = ()=> {
@@ -239,9 +235,7 @@ const closeOthersTags = ()=> {
       background: #fff;
       padding: 0 8px;
       font-size: 12px;
-      margin-left: 5px;
-      margin-top: 4px;
-      margin-bottom: 1px;
+      margin:4px 0 1px 5px;
       &:first-of-type {
         margin-left: 15px;
       }
