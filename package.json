@@ -17,12 +17,14 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^0.25.2",
     "@commitlint/cli": "^14.1.0",
     "@commitlint/config-conventional": "^14.1.0",
     "@types/node": "^18.0.5",
     "@vitejs/plugin-vue": "^1.10.2",
     "@vue/compiler-sfc": "^3.0.5",
     "commitizen": "^4.2.4",
+    "eslint": "^8.20.0",
     "cz-conventional-changelog": "^3.3.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
