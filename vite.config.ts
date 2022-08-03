@@ -6,13 +6,6 @@ import Unocss from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 
 export default defineConfig({
-  test: {
-    include: ['test/**/*.test.ts'],
-    environment: 'jsdom',
-    deps: {
-      inline: ['@vue', '@vueuse', 'vue-demi'],
-    },
-  },
   plugins: [
     Vue({
       include: [/\.vue$/, /\.md$/],
@@ -40,6 +33,13 @@ export default defineConfig({
 
   // 解决process is not defined的问题
   define: { 'process.env': {} },
+  test: {
+    include: ['test/**/*.test.ts'],
+    environment: 'jsdom',
+    deps: {
+      inline: ['@vue', '@vueuse', 'vue-demi'],
+    },
+  },
 
 })
 
