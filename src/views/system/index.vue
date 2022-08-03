@@ -3,7 +3,7 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { systemData } from './config/systemData'
 import mySearch from '@/components/Search/mySearch.vue'
-// import myTable from '@/components/Tabel/myTable.vue'
+import myTable from '@/components/MyTable/my-table.vue'
 
 const list = [
   {
@@ -41,17 +41,17 @@ const handleReset = (): void => {
       <template #title>
         <div>系统管理筛选项</div>
       </template>
-      <!-- <template #footer>
-        <el-button type="primary">
+      <template #footer>
+        <!-- <el-button type="primary">
           导入
         </el-button>
         <el-button type="primary">
           导出
-        </el-button>
-      </template> -->
+        </el-button> -->
+      </template>
     </mySearch>
 
-    <!-- <myTable /> -->
+    <!-- <myTable :table-data="tableData" /> -->
   </div>
 </template>
 

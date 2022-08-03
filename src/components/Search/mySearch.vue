@@ -34,7 +34,7 @@ const handleReset = (): void => {
     </div>
     <!-- 搜索表单项 -->
     <div pl10px>
-      <el-form :label-width="formData.labelWidth">
+      <el-form :label-width="formData.labelWidth" :size="formData.size || 'default'">
         <el-row :gutter="20">
           <template v-for="(item, index) in formData.systemDataList" :key="index">
             <el-col :span="6">
@@ -42,11 +42,21 @@ const handleReset = (): void => {
                 <template v-if="item.type === 'input'">
                   <el-input
                     v-model="formDataMap[item.prop]"
-                    :placeholder="item.placeholder"
+                    :placeholder="item.placeholder || '请输入'"
+                    :clearable="item.clearable || true"
+                    :maxlength="item.maxlength"
+                    :disabled="item.disabled || false"
                   />
                 </template>
                 <template v-else-if="item.type === 'select'">
-                  <el-select v-model="item.prop" :placeholder="item.placeholder">
+                  <el-select
+                    v-model="item.prop"
+                    :placeholder="item.placeholder || '请选择'"
+                    :clearable="item.clearable || true"
+                    :filterable="item.filterable || true"
+                    :multiple="item.multiple || true"
+                    :disabled="item.disabled || false"
+                  >
                     <el-option
                       v-for="item in item.selectOptions"
                       :key="item.value"
@@ -60,7 +70,7 @@ const handleReset = (): void => {
                   <el-date-picker
                     v-model="item.prop"
                     type="date"
-                    :placeholder="item.placeholder"
+                    :placeholder="item.placeholder || '请选择'"
                   />
                 </template>
               </el-form-item>

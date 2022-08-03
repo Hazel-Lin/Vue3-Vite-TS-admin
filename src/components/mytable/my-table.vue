@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+
+const props = defineProps({
+  tableData: Array,
+})
 </script>
 
 <template>
@@ -18,4 +22,21 @@ import { useRoute, useRouter } from 'vue-router'
 </template>
 
 <style lang="scss" scoped>
+.table {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  .table-hearder {
+    padding: 8px 15px;
+    height: 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .table-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+  }
+  }
 </style>
