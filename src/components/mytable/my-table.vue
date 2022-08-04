@@ -9,23 +9,23 @@ const props = defineProps({
     type: Array as PropType<any>,
   },
   // 列表渲染的数据
-  tabelData: {
+  tableData: {
     type: Array as PropType<any>,
   },
 })
 </script>
 
 <template>
-  <div class="table">
-    <div class="table-hearder">
-      <div class="table-title">
+  <div class="myTable">
+    <div class="myTable-header">
+      <div class="myTable-title">
         <slot name="title" />
       </div>
-      <div class="table-btn">
+      <div class="myTable-btn">
         <slot name="button" />
       </div>
     </div>
-    <el-table :data="tabelData" border stripe>
+    <el-table :data="tableData" border stripe>
       <el-table-column
         v-for="item in columnData"
         :key="item.prop"
@@ -37,17 +37,17 @@ const props = defineProps({
 </template>
 
 <style lang="scss" scoped>
-.table {
+.myTable {
   width: 100%;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
-  .table-hearder {
+  .myTable-header{
     padding: 8px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .table-title {
+    .myTable-title {
       font-size: 20px;
       font-weight: 700;
     }
