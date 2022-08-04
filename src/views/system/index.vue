@@ -3,7 +3,7 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { systemData } from './config/systemData'
 import mySearch from '@/components/Search/mySearch.vue'
-import myTable from '@/components/mytable/my-table.vue'
+import myTable from '@/components/Mytable/myTable.vue'
 
 const list = [
   {
@@ -105,7 +105,7 @@ const handleReset = (): void => {
       </template>
     </mySearch>
 
-    <myTable :column-data="organizationList" :tabel-data="list">
+    <myTable :column-data="organizationList" :table-data="list">
       <template #title>
         <div>系统管理</div>
       </template>
