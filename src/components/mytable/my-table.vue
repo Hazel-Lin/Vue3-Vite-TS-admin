@@ -1,9 +1,17 @@
 <script setup lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import type { PropType } from 'vue'
 
 const props = defineProps({
-  tableData: Array,
+  // 列表每一列的数据
+  columnData: {
+    type: Array as PropType<any>,
+  },
+  // 列表渲染的数据
+  tabelData: {
+    type: Array as PropType<any>,
+  },
 })
 </script>
 
@@ -11,12 +19,19 @@ const props = defineProps({
   <div class="table">
     <div class="table-hearder">
       <div class="table-title">
-        系统管理
+        <slot name="title" />
+      </div>
+      <div class="table-btn">
+        <slot name="button" />
       </div>
     </div>
-    <el-table :data="tableData" border style="width: 100%" stripe>
-      <el-table-column prop="id" label="UID" width="180" />
-      <el-table-column prop="name" label="用户名" />
+    <el-table :data="tabelData" border stripe>
+      <el-table-column
+        v-for="item in columnData"
+        :key="item.prop"
+        :prop="item.prop"
+        :label="item.label"
+      />
     </el-table>
   </div>
 </template>
@@ -29,7 +44,6 @@ const props = defineProps({
   border-radius: 5px;
   .table-hearder {
     padding: 8px 15px;
-    height: 45px;
     display: flex;
     justify-content: space-between;
     align-items: center;
