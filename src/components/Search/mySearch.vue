@@ -29,7 +29,9 @@ const props = defineProps({
 const emit = defineEmits(['search', 'reset'])
 const formDataMap: any = ref({})
 const datePrefix = 'dateRange'
-props.formData.systemDataList.forEach((item: any) => {
+const dataList = props.formData.systemDataList
+
+dataList.forEach((item: any) => {
   item.modelKey = item.prop
   if (item.type.includes('range')) {
     const _key = datePrefix
@@ -37,34 +39,38 @@ props.formData.systemDataList.forEach((item: any) => {
     item.modelKey = _key
   }
 })
-
+// 获取日期格式化
+const getFormatResult = (type: string, name: string) => {
+  return type === name ? 'YYYY-MM-DD' : 'YYYY-MM-DD hh:mm:ss'
+}
+const getValue = (value: any, formatStr: string) => {
+  return value ? moment(value).format(formatStr) : ''
+}
+const getCurrentItem = (modelKey: string) => {
+  return dataList.find((item: any) => item.modelKey === modelKey)
+}
+// 时间日期选择器表示一段时间的范围
 const fitlerDateRange = (modelKey: string, data: any) => {
   const _value = formDataMap.value[modelKey] ? formDataMap.value[modelKey] : []
-  const currentItem = props.formData.systemDataList.find((item: any) => item.modelKey === modelKey)
-  const { prop, type } = currentItem
+  const { prop, type } = getCurrentItem(modelKey)
 
-  const formatStr = type === 'daterange' ? 'YYYY-MM-DD' : 'YYYY-MM-DD hh:mm:ss'
-
-  data[prop[0]] = _value[0] ? moment(_value[0]).format(formatStr) : ''
-  data[prop[1]] = _value[1] ? moment(_value[1]).format(formatStr) : ''
+  const formatStr = getFormatResult(type, 'daterange')
+  data[prop[0]] = getValue(_value[0], formatStr)
+  data[prop[1]] = getValue(_value[1], formatStr)
 }
+// 其他表单项
 const filterItem = (modelKey: string, data: any) => {
   let _value = data[modelKey]
-  const currentItem = props.formData.systemDataList.find((item: any) => item.modelKey === modelKey) || {}
-  const { type } = currentItem
+  const { type } = getCurrentItem(modelKey)
 
-  if (type === 'date' || type === 'datetime') {
-    const formatStr = type === 'date' ? 'YYYY-MM-DD' : 'YYYY-MM-DD hh:mm:ss'
-
-    _value = moment(_value).format(formatStr)
-  }
+  if (['date', 'datetime'].includes(type))
+    _value = moment(_value).format(getFormatResult(type, 'date'))
 
   return _value
 }
-// 提交前先处理数据 主要处理时间日期选择器
+// 点击查询前先处理数据
 const filterFormData = () => {
   const data: any = {}
-  console.log('formDataMap.value', formDataMap.value)
 
   for (const key in formDataMap.value) {
     if (!key.includes(datePrefix))
@@ -118,10 +124,10 @@ const handleReset = (): void => {
             style="width: 100%"
           >
             <el-option
-              v-for="item in item.selectOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              v-for="option in item.selectOptions"
+              :key="option.value"
+              :label="option.label"
+              :value="option.value"
             />
           </el-select>
           <!-- 日期选择器 -->
