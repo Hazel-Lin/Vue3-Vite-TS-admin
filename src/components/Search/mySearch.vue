@@ -8,20 +8,80 @@ import {
   watch,
 } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import moment from 'moment'
+import type { PropType } from 'vue'
 
 const props = defineProps({
-  formData: Object,
+  formData: {
+    type: Object as PropType<any>,
+  },
+  colLayout: {
+    type: Object,
+    default: () => ({
+      xl: 6, // ≥1920px
+      lg: 8, // ≥1200px
+      md: 12, // ≥992px
+      sm: 24, // ≥768px
+      xs: 24, // <768px
+    }),
+  },
 })
 const emit = defineEmits(['search', 'reset'])
 const formDataMap: any = ref({})
+const datePrefix = 'dateRange'
+props.formData.systemDataList.forEach((item: any) => {
+  item.modelKey = item.prop
+  // debugger
+  if (item.type.includes('range')) {
+    const _key = datePrefix
+    formDataMap[_key] = item.value
+    item.modelKey = _key
+  }
+})
+
+const fitlerDateRange = (modelKey: string, data: any) => {
+  const _value = formDataMap.value[modelKey] ? formDataMap.value[modelKey] : []
+  const currentItem = props.formData.systemDataList.find((item: any) => item.modelKey === modelKey)
+  const { prop, type } = currentItem
+
+  const formatStr = type === 'daterange' ? 'YYYY-MM-DD' : 'YYYY-MM-DD hh:mm:ss'
+
+  data[prop[0]] = _value[0] ? moment(_value[0]).format(formatStr) : ''
+  data[prop[1]] = _value[1] ? moment(_value[1]).format(formatStr) : ''
+}
+const filterItem = (modelKey: string, data: any) => {
+  let _value = data[modelKey]
+  const currentItem = props.formData.systemDataList.find((item: any) => item.modelKey === modelKey) || {}
+  const { type } = currentItem
+
+  if (type === 'date' || type === 'datetime') {
+    const formatStr = type === 'date' ? 'YYYY-MM-DD' : 'YYYY-MM-DD hh:mm:ss'
+
+    _value = moment(_value).format(formatStr)
+  }
+
+  return _value
+}
+// 提交前先处理数据 主要处理时间日期选择器
+const filterFormData = () => {
+  const data: any = {}
+  console.log('formDataMap.value', formDataMap.value)
+
+  for (const key in formDataMap.value) {
+    if (!key.includes(datePrefix))
+      data[key] = filterItem(key, formDataMap.value)
+
+    else fitlerDateRange(key, data)
+  }
+
+  return data
+}
 
 const handleSearch = (): void => {
-  console.log('搜索', formDataMap.value)
-  emit('search', formDataMap.value)
+  emit('search', filterFormData())
 }
 const handleReset = (): void => {
   formDataMap.value = {}
-  console.log('清空', formDataMap.value)
   emit('reset', formDataMap.value)
 }
 </script>
@@ -33,52 +93,69 @@ const handleReset = (): void => {
       <slot name="title" />
     </div>
     <!-- 搜索表单项 -->
-    <div pl10px>
-      <el-form :label-width="formData.labelWidth" :size="formData.size || 'default'">
-        <el-row :gutter="20">
-          <template v-for="(item, index) in formData.systemDataList" :key="index">
-            <el-col :span="6">
-              <el-form-item :label="item.label" :prop="item.prop">
-                <template v-if="item.type === 'input'">
-                  <el-input
-                    v-model="formDataMap[item.prop]"
-                    :placeholder="item.placeholder || '请输入'"
-                    :clearable="item.clearable || true"
-                    :maxlength="item.maxlength"
-                    :disabled="item.disabled || false"
-                  />
-                </template>
-                <template v-else-if="item.type === 'select'">
-                  <el-select
-                    v-model="item.prop"
-                    :placeholder="item.placeholder || '请选择'"
-                    :clearable="item.clearable || true"
-                    :filterable="item.filterable || true"
-                    :multiple="item.multiple || true"
-                    :disabled="item.disabled || false"
-                  >
-                    <el-option
-                      v-for="item in item.selectOptions"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    />
-                  </el-select>
-                </template>
-                <!-- 日期选择器 -->
-                <template v-else-if="item.type === 'date-picker'">
-                  <el-date-picker
-                    v-model="item.prop"
-                    type="date"
-                    :placeholder="item.placeholder || '请选择'"
-                  />
-                </template>
-              </el-form-item>
-            </el-col>
-          </template>
-        </el-row>
-      </el-form>
-    </div>
+    <el-form
+      :label-width="formData.labelWidth"
+      :size="formData.size"
+    >
+      <el-row>
+        <template v-for="(item, index) in formData.systemDataList" :key="index">
+          <el-col v-bind="colLayout">
+            <el-form-item :label="item.label" :prop="item.modelKey">
+              <el-input
+                v-if="item.type === 'input'"
+                v-model="formDataMap[item.modelKey]"
+                :placeholder="item.placeholder || `请输入${item.label}`"
+                :clearable="item.clearable || true"
+                :maxlength="item.maxlength"
+                :disabled="item.disabled || false"
+              />
+              <el-select
+                v-else-if="item.type === 'select'"
+                v-model="formDataMap[item.modelKey]"
+                :placeholder="item.placeholder || `请选择${item.label}`"
+                :clearable="item.clearable || true"
+                :filterable="item.filterable || true"
+                :multiple="item.multiple || false"
+                :disabled="item.disabled || false"
+                style="width: 100%"
+              >
+                <el-option
+                  v-for="item in item.selectOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+              <!-- 日期选择器 -->
+              <el-date-picker
+                v-else-if="item.type === 'date' || item.type === 'datetime'"
+                v-model="formDataMap[item.modelKey]"
+                :type="item.type"
+                :placeholder="item.placeholder || '请选择日期'"
+                :disabled="item.disabled"
+                :clearable="item.clearable"
+                style="width: 100%"
+              />
+              <el-date-picker
+                v-else-if="item.type === 'daterange' || item.type === 'datetimerange'"
+                v-model="formDataMap[item.modelKey]"
+                :type="item.type"
+                :range-separator="item.rangeSeparator || '至'"
+                :disabled="item.disabled"
+                :clearable="item.clearable"
+                :placeholder="item.placeholder"
+                :start-placeholder="item.start || '开始日期'"
+                :end-placeholder="item.end || '结束日期'"
+                :disabled-date="item.pickerOptions?.disabledDate"
+                :shortcuts="item.pickerOptions?.shortcuts || []"
+                :cell-class-name="item.pickerOptions?.cellClassName"
+                style="width: 100%"
+              />
+            </el-form-item>
+          </el-col>
+        </template>
+      </el-row>
+    </el-form>
     <!-- 表单按钮 默认按钮展示 -->
     <div class="footer">
       <div v-if="formData.isShowDefaultBtns">

@@ -17,6 +17,7 @@ specifiers:
   eslint-plugin-prettier: ^4.0.0
   husky: ^7.0.0
   jsdom: ^20.0.0
+  moment: ^2.29.1
   path: ^0.12.7
   pinia: ^2.0.9
   prettier: ^2.4.1
@@ -37,6 +38,7 @@ dependencies:
   '@vueuse/core': 9.0.2_vue@3.2.27
   axios: 0.24.0
   element-plus: 1.0.2-beta.71_vue@3.2.27
+  moment: 2.29.4
   path: 0.12.7
   pinia: 2.0.9_typescript@4.5.4+vue@3.2.27
   sass: 1.49.0
@@ -3863,6 +3865,10 @@ packages:
       pathe: 0.3.3
       pkg-types: 0.3.3
     dev: true
+
+  /moment/2.29.4:
+    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
+    dev: false
 
   /mrmime/1.0.1:
     resolution: {integrity: sha512-hzzEagAgDyoU1Q6yg5uI+AorQgdvMCur3FcKf7NhMKWsaYg+RnbTyHRa/9IlLF9rf455MOCtcqqrQQ83pPP7Uw==}

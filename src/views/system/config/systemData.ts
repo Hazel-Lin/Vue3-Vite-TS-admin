@@ -1,10 +1,10 @@
 /**
  * 存放系统管理data数据
  */
-import { DATE_PICKER, INPUT, SELECT } from '@/constants/fromType'
+import { DATE_RANGE, INPUT, SELECT } from '@/constants/fromType'
 
 export const systemData: any = {
-  labelWidth: '80px',
+  labelWidth: '100px',
   // 是否展示默认的查询和清空按钮
   isShowDefaultBtns: true,
   systemDataList: [
@@ -21,16 +21,30 @@ export const systemData: any = {
       placeholder: '请输入手机号码',
     },
     {
-      type: DATE_PICKER,
+      type: DATE_RANGE,
       label: '时间',
-      prop: 'time',
+      prop: ['updateStartTime', 'updateEndTime'],
       placeholder: '请输入具体时间',
     },
     {
       type: SELECT,
       label: '状态',
+      prop: 'status',
       placeholder: '请选择状态',
-      selectOptions: [],
+      selectOptions: [
+        {
+          label: '全部',
+          value: '2',
+        },
+        {
+          label: '启用',
+          value: '1',
+        },
+        {
+          label: '禁用',
+          value: '0',
+        },
+      ],
     },
   ],
 }
