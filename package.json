@@ -7,17 +7,19 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@types/mockjs": "^1.0.6",
     "@vueuse/core": "^9.0.2",
     "axios": "^0.24.0",
     "element-plus": "^1.0.2-beta.62",
+    "mockjs": "^1.1.0",
+    "moment": "^2.29.1",
     "path": "^0.12.7",
     "pinia": "^2.0.9",
     "sass": "^1.45.0",
     "vue": "^3.0.5",
     "vue-i18n": "^8.26.5",
     "vue-router": "^4.0.12",
-    "vuex": "^4.0.2",
-    "moment": "^2.29.1"
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.25.2",
@@ -39,6 +41,7 @@
     "unplugin-auto-import": "^0.10.3",
     "unplugin-vue-define-options": "^0.6.2",
     "vite": "^2.3.7",
+    "vite-plugin-mock": "^2.9.6",
     "vitest": "^0.20.2",
     "vue-tsc": "^0.0.24"
   },
