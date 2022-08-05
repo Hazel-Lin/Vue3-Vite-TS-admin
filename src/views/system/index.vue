@@ -4,9 +4,9 @@ import moment from 'moment'
 import { systemData } from './config/systemData'
 import mySearch from '@/components/Search/mySearch.vue'
 import myTable from '@/components/Mytable/myTable.vue'
-
-const list = [
-  {
+const list: any = []
+for (let i = 0; i < 20; i++) {
+  list.push({
     address: '',
     updateByName: 'xxx',
     provCode: '430000',
@@ -21,24 +21,9 @@ const list = [
     createTime: 1658110963000,
     updateBy: 2676,
     businessStr: '业务2',
-  },
-  {
-    address: '',
-    updateByName: 'xxx',
-    provCode: '',
-    cityCode: '',
-    companyName: '超级资源有限公司2',
-    provAndCityName: '湖南省株洲市',
-    updateTime: 1658110860000,
-    subordinateCode: '11111',
-    parentId: 1,
-    companyId: 8,
-    companyNo: '0',
-    createTime: 1658110860000,
-    updateBy: 2676,
-    businessStr: '业务1',
-  },
-]
+  })
+}
+
 // 渲染表格每一列的数据
 const organizationList = [
   {
@@ -86,8 +71,14 @@ const handleReset = (): void => {
 const getTime = (time: number): string => {
   return moment(time).format('YYYY-MM-DD HH:mm:ss')
 }
+const pageSize = ref(10)
+const currentPage = ref(1)
 const handleEdit = () => {}
 const handleDelete = () => {}
+const getList = ({ page, limit }: any) => {
+  console.log(page, 'page')
+  console.log(limit, 'limit')
+}
 </script>
 
 <template>
@@ -110,7 +101,14 @@ const handleDelete = () => {}
       </template>
     </mySearch>
 
-    <myTable :column-data="organizationList" :table-data="list">
+    <myTable
+      :column-data="organizationList"
+      :table-data="list"
+      :total="list.length"
+      :page-size="pageSize"
+      :current-page="currentPage"
+      @pagination="getList"
+    >
       <template #title>
         <div>菜单管理</div>
       </template>

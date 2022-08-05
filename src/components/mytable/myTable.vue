@@ -23,33 +23,38 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-  totalCount: {
+  total: {
     type: Number,
     default: 0,
   },
+  // 个数选择器
   pageSizes: {
     type: Array as PropType<any>,
     default: () => [10, 20, 30, 40, 50],
   },
+  // 每页显示条目个数
   pageSize: {
     type: Number,
     default: 10,
   },
+  // 当前页数
   currentPage: {
     type: Number,
     default: 1,
   },
 })
 // 多选框
-const emit = defineEmits(['selectionChange'])
+const emit = defineEmits(['selectionChange', 'pagination'])
 const selectionChange = (selectionValue: any) => {
   emit('selectionChange', selectionValue)
 }
-const handleSizeChange = () => {
 
+const handleCurrentChange = (val: any) => {
+  console.log('val', val)
+  emit('pagination', { page: props.currentPage, limit: val })
 }
-const handleCurrentChange = () => {
-
+const handleSizeChange = (val: any) => {
+  emit('pagination', { page: val, limit: props.pageSize })
 }
 </script>
 
@@ -100,7 +105,7 @@ const handleCurrentChange = () => {
       <el-pagination
         :current-page="currentPage"
         :page-size="pageSize"
-        :total="totalCount"
+        :total="total"
         :page-sizes="pageSizes"
         layout="total, sizes, prev, pager, next, jumper"
         @size-change="handleSizeChange"

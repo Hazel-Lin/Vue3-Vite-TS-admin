@@ -15,5 +15,6 @@ export default defineComponent({})
   background-color: #f0f0f0;
   height: 100%;
   padding: 20px;
+  overflow: auto;
 }
 </style>
