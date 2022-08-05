@@ -2,6 +2,12 @@
   "extends": "@antfu",
   // Unexpected console statement.eslintno-console
   "rules": {
-    "no-console": "off"
+    "no-console": "off",
+    "vue/valid-v-slot": [
+      "error",
+      {
+        "allowModifiers": true
+      }
+    ]
   }
 }
