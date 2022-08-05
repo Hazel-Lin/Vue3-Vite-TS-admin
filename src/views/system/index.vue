@@ -86,6 +86,8 @@ const handleReset = (): void => {
 const getTime = (time: number): string => {
   return moment(time).format('YYYY-MM-DD HH:mm:ss')
 }
+const handleEdit = () => {}
+const handleDelete = () => {}
 </script>
 
 <template>
@@ -96,7 +98,7 @@ const getTime = (time: number): string => {
       @reset="handleReset"
     >
       <template #title>
-        <div>系统管理筛选项</div>
+        <div>菜单管理筛选项</div>
       </template>
       <template #footer>
         <!-- <el-button type="primary">
@@ -110,7 +112,7 @@ const getTime = (time: number): string => {
 
     <myTable :column-data="organizationList" :table-data="list">
       <template #title>
-        <div>系统管理</div>
+        <div>菜单管理</div>
       </template>
       <!-- 标记需要更改的prop属性 再传入修改后的数据 -->
       <template #createTime="{ row }">
@@ -122,6 +124,21 @@ const getTime = (time: number): string => {
         <div>
           {{ getTime(row.updateTime) }}
         </div>
+      </template>
+      <template #handler="{ row }">
+        <el-button
+          type="text"
+          @click="handleEdit()"
+        >
+          编辑
+        </el-button>
+        <el-button
+          type="text"
+          class="color-#F56C6C"
+          @click="handleDelete()"
+        >
+          删除
+        </el-button>
       </template>
       <template #button>
         <el-button type="primary">

@@ -19,11 +19,37 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  showFooter: {
+    type: Boolean,
+    default: true,
+  },
+  totalCount: {
+    type: Number,
+    default: 0,
+  },
+  pageSizes: {
+    type: Array as PropType<any>,
+    default: () => [10, 20, 30, 40, 50],
+  },
+  pageSize: {
+    type: Number,
+    default: 10,
+  },
+  currentPage: {
+    type: Number,
+    default: 1,
+  },
 })
 // 多选框
 const emit = defineEmits(['selectionChange'])
 const selectionChange = (selectionValue: any) => {
   emit('selectionChange', selectionValue)
+}
+const handleSizeChange = () => {
+
+}
+const handleCurrentChange = () => {
+
 }
 </script>
 
@@ -37,7 +63,14 @@ const selectionChange = (selectionValue: any) => {
         <slot name="button" />
       </div>
     </div>
-    <el-table :data="tableData" border stripe @selection-change="selectionChange">
+    <!-- 列表项 -->
+    <el-table
+      class="myTable-table"
+      :data="tableData"
+      border
+      stripe
+      @selection-change="selectionChange"
+    >
       <el-table-column
         v-if="showSelectColumn"
         type="selection"
@@ -62,14 +95,25 @@ const selectionChange = (selectionValue: any) => {
         </template>
       </el-table-column>
     </el-table>
+    <!-- 分页器 -->
+    <div v-if="showFooter" class="footer">
+      <el-pagination
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total="totalCount"
+        :page-sizes="pageSizes"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .myTable {
-  width: 100%;
+  padding: 10px 20px;
   background-color: #fff;
-  border: 1px solid #ddd;
   border-radius: 5px;
   .myTable-header{
     padding: 8px 15px;
@@ -80,6 +124,14 @@ const selectionChange = (selectionValue: any) => {
       font-size: 20px;
       font-weight: 700;
     }
+  }
+  .footer {
+    background: #fff;
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
   }
 }
 </style>

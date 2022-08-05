@@ -94,7 +94,9 @@ const handleReset = (): void => {
   <div class="searchFrom">
     <!-- 头部标题展示 -->
     <div class="header">
-      <slot name="title" />
+      <div class="header-title">
+        <slot name="title" />
+      </div>
     </div>
     <!-- 搜索表单项 -->
     <el-form
@@ -176,24 +178,27 @@ const handleReset = (): void => {
 
 <style lang="scss" scoped>
 .searchFrom {
-  padding: 10px;
-  margin-bottom: 20px;
+  padding: 10px 20px;
   background-color: #fff;
-  border: 1px solid #ddd;
   border-radius: 5px;
+  margin-bottom: 20px;
+
   .header {
-    font-size: 20px;
-    font-weight: 700;
-    text-align: left;
-    margin-bottom: 10px;
+    padding: 8px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .header-title{
+      font-size: 20px;
+      font-weight: 700;
+    }
   }
   .footer {
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
   }
   .footer-btns {
-    margin-right: 10px;
+    margin-right: 15px;
   }
 }
 </style>
