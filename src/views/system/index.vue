@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, defineComponent, onMounted, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import moment from 'moment'
 import { systemData } from './config/systemData'
 import mySearch from '@/components/Search/mySearch.vue'
 import myTable from '@/components/Mytable/myTable.vue'
@@ -83,6 +83,9 @@ const handleSearch = (): void => {
 const handleReset = (): void => {
   // 清空筛选项数据 并且重新获取数据
 }
+const getTime = (time: number): string => {
+  return moment(time).format('YYYY-MM-DD HH:mm:ss')
+}
 </script>
 
 <template>
@@ -108,6 +111,17 @@ const handleReset = (): void => {
     <myTable :column-data="organizationList" :table-data="list">
       <template #title>
         <div>系统管理</div>
+      </template>
+      <!-- 标记需要更改的prop属性 再传入修改后的数据 -->
+      <template #createTime="{ row }">
+        <div>
+          {{ getTime(row.createTime) }}
+        </div>
+      </template>
+      <template #updateTime="{ row }">
+        <div>
+          {{ getTime(row.updateTime) }}
+        </div>
       </template>
       <template #button>
         <el-button type="primary">

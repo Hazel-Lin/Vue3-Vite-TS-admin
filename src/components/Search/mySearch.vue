@@ -2,7 +2,6 @@
 import {
   computed,
   defineComponent,
-  defineProps,
   onMounted,
   ref,
   watch,

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { computed, defineComponent, onMounted, ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { computed, ref, watch } from 'vue'
 import type { PropType } from 'vue'
 
 const props = defineProps({
@@ -12,7 +11,20 @@ const props = defineProps({
   tableData: {
     type: Array as PropType<any>,
   },
+  showSelectColumn: {
+    type: Boolean,
+    default: false,
+  },
+  showIndexColumn: {
+    type: Boolean,
+    default: false,
+  },
 })
+// 多选框
+const emit = defineEmits(['selectionChange'])
+const selectionChange = (selectionValue: any) => {
+  emit('selectionChange', selectionValue)
+}
 </script>
 
 <template>
@@ -25,13 +37,30 @@ const props = defineProps({
         <slot name="button" />
       </div>
     </div>
-    <el-table :data="tableData" border stripe>
+    <el-table :data="tableData" border stripe @selection-change="selectionChange">
+      <el-table-column
+        v-if="showSelectColumn"
+        type="selection"
+        align="center"
+        width="60"
+      />
+      <el-table-column
+        v-if="showIndexColumn"
+        type="index"
+        label="序号"
+        align="center"
+        width="80"
+      />
       <el-table-column
         v-for="item in columnData"
-        :key="item.prop"
-        :prop="item.prop"
-        :label="item.label"
-      />
+        v-bind="item" :key="item.prop"
+      >
+        <template #default="scope">
+          <slot :name="item.prop" :row="scope.row">
+            {{ scope.row[item.prop] }}
+          </slot>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
