@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 import type { UserInfo } from '@/types/user'
-import { login } from '@/api/login'
+import { login, role } from '@/api/login'
 import { asyncRoutes, constantRoutes } from '@/router'
-
+import { setToken } from '@/utils/auth'
 // 存放用户信息
 // token userInfo userPermissions
 interface UserState {
@@ -68,7 +68,7 @@ export const userStore = defineStore({
       this.userPermissions = permissions
     },
     // user login 登录后获取到token 通过token获取用户信息和权限并渲染菜单
-    // TODO 后续接口补充
+    // 用户登录
     async login() {
       const params = {
         username: 'admin',
@@ -77,8 +77,22 @@ export const userStore = defineStore({
       this.setUserRoutes(constantRoutes)
       const res = await login(params)
       if (res.isSuccess) {
-        const { token } = res.getData()
-        this.setToken(token)
+        const { token, username } = res.getData()
+        if (token) {
+          this.setToken(token)
+          setToken(token)
+          this.setUserInfo(username)
+          this.getRole(token)
+        }
+      }
+    },
+    // 获取用户权限
+    async getRole(token: string) {
+      const res = await role({ token })
+      if (res.isSuccess) {
+        const { role } = res.getData()
+        if (role)
+          this.setUserPermission(role)
       }
     },
   },

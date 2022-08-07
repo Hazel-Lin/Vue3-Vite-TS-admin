@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { userStore } from '../../store/modules/user'
 
 const emit = defineEmits(['changeFlod'])
 const route = useRoute()
@@ -64,7 +65,7 @@ const handleLogout = () => {
       <el-dropdown @command="handleDropDownClick">
         <span flex items-center>
           <el-avatar :size="30" :src="circleUrl" />
-          <span ml10px>Hz Lin</span>
+          <span ml10px>{{ userStore().getUserInfo }}</span>
         </span>
         <template #dropdown>
           <el-dropdown-menu @click="handleLogout">

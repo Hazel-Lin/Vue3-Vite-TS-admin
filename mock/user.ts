@@ -10,6 +10,7 @@ export default [
         code: 0,
         data: {
           token: 'admin-token',
+          username: 'admin',
         },
         message: '请求成功',
       }

@@ -9,6 +9,7 @@
  * 以下路由控制面包屑及地址栏中的url
  */
 import { createRouter, createWebHashHistory } from 'vue-router'
+// import productRouter from './modules/product'
 import Layout from '@/layout/index.vue'
 
 // RouteRecordRaw 路由记录
@@ -103,29 +104,20 @@ export const constantRoutes: any[] = [
       import(/* webpackChunkName: "404" */ '@/views/404.vue'),
   },
 ]
-function compare(property: any) {
-  return function (a: any, b: any) {
-    return a[property].sort - b[property].sort
-  }
-}
 
 // 导入modules文件夹下的路由 读取本地路由
-// const modulesRoute:any = [];
-// const routeFiles = (require as any).context('./modules', true, /\.ts$/);
-// routeFiles.keys().forEach((path:any) => {
-//   const module = routeFiles(path).default;
-//   if (module) {
-//     modulesRoute.push(module);
-//   }
-// });
-// const modulesRoutes = modulesRoute.sort(compare('meta'));
+const routeFiles = import.meta.globEager('./modules/*.ts')
+const modulesRoutes = Object.keys(routeFiles).reduce((modules: any, modulePath) => {
+  modules.push(routeFiles[modulePath].default)
+  return modules
+}, [])
 
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user resources
  */
 export const asyncRoutes = [
-  // ...modulesRoutes,
+  ...modulesRoutes,
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true },
 ]
