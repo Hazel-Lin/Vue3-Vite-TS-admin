@@ -1,6 +1,7 @@
 import type { MockMethod } from 'vite-plugin-mock'
 
 export default [
+  // 用户登录
   {
     url: '/admin/login',
     method: 'post',
@@ -14,6 +15,7 @@ export default [
       }
     },
   },
+  // 获取用户权限
   {
     url: '/admin/role',
     method: 'post',

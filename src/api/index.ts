@@ -1,6 +1,6 @@
-import Request from "./request";
+import Request from './request'
 
 export default new Request({
   baseURL: '',
-  timeout: 30000
+  timeout: 30000,
 })

@@ -18,12 +18,11 @@ const isRemember = ref(true)
 
 const loginRules = {
   name: [{ required: true, message: '请输入账号', trigger: 'change' }],
-  password: [{ required: true, message: '请输入密码', triiger: 'change' }],
+  password: [{ required: true, message: '请输入密码', trigger: 'change' }],
 }
-const user = userStore()
 const loginAction = () => {
   router.push('/')
-  const result = user.login()
+  const result = userStore().login()
 }
 </script>
 
@@ -73,7 +72,7 @@ const loginAction = () => {
           </div>
           <el-form-item>
             <el-button class="login-btn" type="primary" @click="loginAction">
-              立即登录
+              登录
             </el-button>
           </el-form-item>
         </el-form>
