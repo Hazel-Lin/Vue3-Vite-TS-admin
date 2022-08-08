@@ -37,7 +37,6 @@ watch(
   },
 )
 const handleDropDownClick = () => {}
-const handleOpenMessage = () => {}
 const handleLogout = () => {
   router.push('/login')
 }
@@ -61,7 +60,6 @@ const handleLogout = () => {
       </el-breadcrumb>
     </div>
     <div class="content-nav-head-right">
-      <i class="el-icon-message message-icon" @click="handleOpenMessage" />
       <el-dropdown @command="handleDropDownClick">
         <span flex items-center>
           <el-avatar :size="30" :src="circleUrl" />

@@ -4,7 +4,7 @@
  */
 import { computed, defineComponent, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { asyncRoutes, constantRoutes } from '../../router'
+import router, { asyncRoutes, constantRoutes } from '../../router'
 import SidebarItem from './SidebarItem.vue'
 
 const props = defineProps({
@@ -19,12 +19,15 @@ const route = useRoute()
 const onRoutes = computed(() => {
   return route.path
 })
+const back2Home = () => {
+  router.push({ path: '/' })
+}
 </script>
 
 <template>
   <div class="bg-#0c2135 h-100% overflow-hidden">
     <div flex h50px justify-center items-center flex-row>
-      <img w-35px mx10px src="@/assets/img/logo.png" alt="logo">
+      <img w-35px mx10px cursor-pointer src="@/assets/img/logo.png" alt="logo" @click="back2Home">
       <span v-if="!isCollapse" fw700 text-16px text-white>Vue3Admin</span>
     </div>
     <el-scrollbar wrap-class="scrollbar-wrapper">
