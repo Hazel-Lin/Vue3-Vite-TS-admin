@@ -4,8 +4,10 @@ specifiers:
   '@antfu/eslint-config': ^0.25.2
   '@commitlint/cli': ^14.1.0
   '@commitlint/config-conventional': ^14.1.0
+  '@types/js-cookie': ^2.2.6
   '@types/mockjs': ^1.0.6
   '@types/node': ^18.0.5
+  '@types/nprogress': ^0.2.0
   '@vitejs/plugin-vue': ^1.10.2
   '@vue/compiler-sfc': ^3.0.5
   '@vueuse/core': ^9.0.2
@@ -17,9 +19,11 @@ specifiers:
   eslint-config-prettier: ^8.3.0
   eslint-plugin-prettier: ^4.0.0
   husky: ^7.0.0
+  js-cookie: ^2.2.1
   jsdom: ^20.0.0
   mockjs: ^1.1.0
   moment: ^2.29.1
+  nprogress: ^0.2.0
   path: ^0.12.7
   pinia: ^2.0.9
   prettier: ^2.4.1
@@ -42,8 +46,10 @@ dependencies:
   '@vueuse/core': 9.0.2_vue@3.2.27
   axios: 0.24.0
   element-plus: 1.0.2-beta.71_vue@3.2.27
+  js-cookie: 2.2.1
   mockjs: 1.1.0
   moment: 2.29.4
+  nprogress: 0.2.0
   path: 0.12.7
   pinia: 2.0.9_typescript@4.5.4+vue@3.2.27
   sass: 1.49.0
@@ -56,7 +62,9 @@ devDependencies:
   '@antfu/eslint-config': 0.25.2_eslint@8.21.0+typescript@4.5.4
   '@commitlint/cli': 14.1.0
   '@commitlint/config-conventional': 14.1.0
+  '@types/js-cookie': 2.2.7
   '@types/node': registry.npmmirror.com/@types/node/18.0.5
+  '@types/nprogress': 0.2.0
   '@vitejs/plugin-vue': 1.10.2_vite@2.7.13
   '@vue/compiler-sfc': 3.2.27
   commitizen: 4.2.4_@types+node@18.0.5
@@ -645,6 +653,10 @@ packages:
     resolution: {integrity: sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==}
     dev: true
 
+  /@types/js-cookie/2.2.7:
+    resolution: {integrity: sha512-aLkWa0C0vO5b4Sr798E26QgOkss68Un0bLjs7u9qxzPT5CG+8DuNTffWES58YzJs3hrVAOs1wonycqEBqNJubA==}
+    dev: true
+
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
     dev: true
@@ -672,6 +684,10 @@ packages:
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
+    dev: true
+
+  /@types/nprogress/0.2.0:
+    resolution: {integrity: sha512-1cYJrqq9GezNFPsWTZpFut/d4CjpZqA0vhqDUPFWYKF1oIyBz5qnoYMzR+0C/T96t3ebLAC1SSnwrVOm5/j74A==}
     dev: true
 
   /@types/parse-json/4.0.0:
@@ -3590,6 +3606,10 @@ packages:
     hasBin: true
     dev: true
 
+  /js-cookie/2.2.1:
+    resolution: {integrity: sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==}
+    dev: false
+
   /js-tokens/4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
     dev: true
@@ -4054,6 +4074,10 @@ packages:
     dependencies:
       path-key: 3.1.1
     dev: true
+
+  /nprogress/0.2.0:
+    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
+    dev: false
 
   /nth-check/2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}

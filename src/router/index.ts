@@ -9,7 +9,6 @@
  * 以下路由控制面包屑及地址栏中的url
  */
 import { createRouter, createWebHashHistory } from 'vue-router'
-// import productRouter from './modules/product'
 import Layout from '@/layout/index.vue'
 
 // RouteRecordRaw 路由记录
@@ -52,24 +51,7 @@ export const constantRoutes: any[] = [
       },
     ],
   },
-  {
-    path: '/system',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: 'System',
-    meta: { title: '系统配置', icon: 'el-icon-menu', noCache: true },
-    children: [
-      {
-        path: 'index',
-        name: 'Menu',
-        component: () =>
-          import(
-            /* webpackChunkName: "account" */ '@/views/system/index.vue'
-          ),
-        meta: { title: '菜单管理', icon: 'el-icon-menu' },
-      },
-    ],
-  },
+
   {
     path: '/base',
     component: Layout,
@@ -98,7 +80,7 @@ export const constantRoutes: any[] = [
     ],
   },
   {
-    path: '/:pathMatch(.*)*',
+    path: '/404',
     name: '404',
     component: () =>
       import(/* webpackChunkName: "404" */ '@/views/404.vue'),
@@ -119,7 +101,7 @@ const modulesRoutes = Object.keys(routeFiles).reduce((modules: any, modulePath) 
 export const asyncRoutes = [
   ...modulesRoutes,
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true },
+  { path: '/:catchAll(.*)', redirect: '/404', hidden: true },
 ]
 // 创建一个路由实例
 const router = createRouter({

@@ -1,14 +1,13 @@
 import { defineStore } from 'pinia'
 import type { UserInfo } from '@/types/user'
 import { login, role } from '@/api/login'
-import { asyncRoutes, constantRoutes } from '@/router'
-import { setToken } from '@/utils/auth'
+import { removeToken, setToken } from '@/utils/auth'
 // 存放用户信息
 // token userInfo userPermissions
 interface UserState {
   token: string | null
   userInfo: UserInfo
-  userPermissions: string[]
+  userRoles: string[]
   userRoutes: string[]
 }
 const _recursiveDeleteBtnPermission = (menus: any): void => {
@@ -41,7 +40,7 @@ export const userStore = defineStore({
   state: (): UserState => ({
     token: null,
     userInfo: null as any,
-    userPermissions: [],
+    userRoles: [],
     userRoutes: [],
   }),
   getters: {
@@ -50,7 +49,7 @@ export const userStore = defineStore({
     // 获取用户信息
     getUserInfo: (state): UserInfo => state.userInfo,
     // 获取用户权限
-    getUserPermissions: (state): string[] => state.userPermissions,
+    getUserPermissions: (state): string[] => state.userRoles,
 
     getUserRoutes: (state): string[] => state.userRoutes,
   },
@@ -64,8 +63,13 @@ export const userStore = defineStore({
     setUserRoutes(userRoutes: any) {
       this.userRoutes = userRoutes
     },
-    setUserPermission(permissions: any) {
-      this.userPermissions = permissions
+    setUserRoles(role: any) {
+      this.userRoles = role
+    },
+    removeToken() {
+      this.setToken('')
+      this.setUserRoles([])
+      removeToken()
     },
     // user login 登录后获取到token 通过token获取用户信息和权限并渲染菜单
     // 用户登录
@@ -74,7 +78,6 @@ export const userStore = defineStore({
         username: 'admin',
         password: '123456',
       }
-      this.setUserRoutes(constantRoutes)
       const res = await login(params)
       if (res.isSuccess) {
         const { token, username } = res.getData()
@@ -90,9 +93,9 @@ export const userStore = defineStore({
     async getRole(token: string) {
       const res = await role({ token })
       if (res.isSuccess) {
-        const { role } = res.getData()
-        if (role)
-          this.setUserPermission(role)
+        const { roles } = res.getData()
+        roles && this.setUserRoles(roles)
+        return roles
       }
     },
   },

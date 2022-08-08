@@ -4,17 +4,23 @@
  */
 import { computed, defineComponent, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import router, { asyncRoutes, constantRoutes } from '../../router'
-import SidebarItem from './SidebarItem.vue'
+import router, { constantRoutes } from '../../router'
+import { userStore } from '../../store/modules/user'
+import { userPermissions } from '../../store/modules/permission'
 
+import SidebarItem from './SidebarItem.vue'
 const props = defineProps({
   isCollapse: Boolean,
 })
-// 侧边导航栏时对应的路由
-const routeList: any = constantRoutes
-console.log(routeList, 'routeList')
-
 const route = useRoute()
+// 侧边导航栏时对应的路由
+const userRoles = userStore().getUserPermissions
+
+const asyncRouteList: any = userPermissions().generateRoutes(userRoles)
+
+const routeList = constantRoutes.concat(asyncRouteList)
+
+console.log(routeList, 'routeList')
 
 const onRoutes = computed(() => {
   return route.path

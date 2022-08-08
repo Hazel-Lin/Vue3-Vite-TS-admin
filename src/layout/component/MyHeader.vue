@@ -38,6 +38,7 @@ watch(
 )
 const handleDropDownClick = () => {}
 const handleLogout = () => {
+  userStore().removeToken()
   router.push('/login')
 }
 </script>

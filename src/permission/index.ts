@@ -1,30 +1,38 @@
-import type { Router } from 'vue-router'
-import router from '../router'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+import type { RouteLocationNormalized } from 'vue-router'
+import { userStore } from '../store/modules/user'
+import { userPermissions } from '../store/modules/permission'
+import router from '@/router'
+import { getToken } from '@/utils/auth'
 
-// 路由守卫
-const hasToken = localStorage.getItem('token')
-const hasPermissions = (to: any) => {
-  return to.meta.permissions
-}
-router.beforeEach((to, from, next) => {
-  // 判断是否有token 有token就可以访问
-  console.log(hasToken, 'hasToken')
+NProgress.configure({ showSpinner: false })
+const hasToken = getToken()
 
-  if (hasToken) {
-    // 场景？？？
-    if (to.path === '/login') {
-      next({ path: '/home/index' })
+router.beforeEach(async (to: RouteLocationNormalized, _: RouteLocationNormalized, next: any) => {
+  NProgress.start()
+  if (to.path === '/home') {
+    console.log('hasToken', hasToken)
+
+    if (hasToken) {
+      const roles = await userStore().getRole(hasToken)
+      const accessRoutes = userPermissions().generateRoutes(roles)
+
+      accessRoutes.forEach((item: any) => {
+        router.addRoute(item)
+      })
+
+      next()
     }
-    else {
-      if (hasPermissions(to))
-        next()
 
-      else
-        next({ path: '/404' })
-    }
+    else { next({ path: '/login' }) }
   }
   else {
-    // 没有token就跳转到登录页面
-    next('/login')
+    next()
   }
+})
+
+router.afterEach((to: RouteLocationNormalized) => {
+  console.log(to)
+  NProgress.done()
 })

@@ -1,11 +1,11 @@
 import Layout from '@/layout/index.vue'
-const productRouter = {
-  path: '/product',
+const systemRouter = {
+  path: '/system',
   component: Layout,
   redirect: 'noRedirect',
-  name: 'Product',
+  name: 'System',
   meta: {
-    title: '产品配置',
+    title: '系统配置',
     icon: 'el-icon-menu',
     noCache: true,
     // 仅有管理员有权限
@@ -17,10 +17,10 @@ const productRouter = {
       name: 'Menu',
       component: () =>
         import(
-          /* webpackChunkName: "account" */ '@/views/system/index.vue'
+          /* webpackChunkName: "system" */ '@/views/system/index.vue'
         ),
-      meta: { title: '产品管理', icon: 'el-icon-menu' },
+      meta: { title: '菜单管理', icon: 'el-icon-menu' },
     },
   ],
 }
-export default productRouter
+export default systemRouter

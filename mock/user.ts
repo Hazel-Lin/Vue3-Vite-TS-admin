@@ -24,7 +24,7 @@ export default [
       return {
         code: 0,
         data: {
-          role: ['admin'],
+          roles: ['admin'],
         },
         message: '请求成功',
       }
