@@ -1,25 +1,17 @@
 <script setup lang="ts">
-/**
- * el-sub-menu 一级菜单
- */
 import { computed, defineComponent, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import router, { constantRoutes } from '../../router'
-import { userStore } from '../../store/modules/user'
 import { userPermissions } from '../../store/modules/permission'
-
 import SidebarItem from './SidebarItem.vue'
+
 const props = defineProps({
   isCollapse: Boolean,
 })
 const route = useRoute()
-// 侧边导航栏时对应的路由
-const userRoles = userStore().getUserPermissions
+const router = useRouter()
 
-const asyncRouteList: any = userPermissions().generateRoutes(userRoles)
-
-const routeList = constantRoutes.concat(asyncRouteList)
-
+// 左侧菜单栏
+const routeList = userPermissions().routes
 console.log(routeList, 'routeList')
 
 const onRoutes = computed(() => {
