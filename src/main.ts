@@ -4,13 +4,17 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './permission'
+import { start } from './permission/start'
 // import 'element-plus/dist/index.css'
 import 'element-plus/lib/theme-chalk/index.css'
 import 'uno.css'
 
 const app = createApp(App)
-
-app.use(router)
-app.use(ElementPlus)
+// 避免pinia报错
 app.use(store)
-app.mount('#app')
+
+start().then(() => {
+  app.use(ElementPlus)
+  app.use(router)
+  app.mount('#app')
+})
