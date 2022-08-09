@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { UserInfo } from '@/types/user'
-import { login, role } from '@/api/login'
+import { getRoles, login } from '@/api/login'
 import { removeToken, setToken } from '@/utils/auth'
 // 存放用户信息
 // token userInfo userPermissions
@@ -59,6 +59,7 @@ export const userStore = defineStore({
     },
     setUserInfo(userInfo: UserInfo) {
       this.userInfo = userInfo
+      localStorage.setItem('userInfo', JSON.stringify(userInfo))
     },
     setUserRoutes(userRoutes: any) {
       this.userRoutes = userRoutes
@@ -80,18 +81,18 @@ export const userStore = defineStore({
       }
       const res = await login(params)
       if (res.isSuccess) {
-        const { token, username } = res.getData()
+        const { token, userInfo } = res.getData()
         if (token) {
           this.setToken(token)
           setToken(token)
-          this.setUserInfo(username)
-          this.getRole(token)
+          this.setUserInfo(userInfo)
+          this.getRoleList(token)
         }
       }
     },
     // 获取用户权限
-    async getRole(token: string) {
-      const res = await role({ token })
+    async getRoleList(token: string) {
+      const res = await getRoles({ token })
       if (res.isSuccess) {
         const { roles } = res.getData()
         roles && this.setUserRoles(roles)
