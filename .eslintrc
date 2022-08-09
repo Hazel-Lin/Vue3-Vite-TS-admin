@@ -3,6 +3,8 @@
   // Unexpected console statement.eslintno-console
   "rules": {
     "no-console": "off",
+    // can use Promise reject without Error
+    "prefer-promise-reject-errors": ["error", { "allowEmptyReject": true }],
     "vue/valid-v-slot": [
       "error",
       {
