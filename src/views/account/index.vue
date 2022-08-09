@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div>123123123</div>
+  <div>账号管理</div>
 </template>
 
 <style lang="scss">

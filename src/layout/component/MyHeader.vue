@@ -41,6 +41,10 @@ const handleLogout = () => {
   userStore().removeToken()
   router.push('/login')
 }
+
+const username = computed(() => {
+  return (userStore().getUserInfo as any)?.username || JSON.parse(localStorage.getItem('userInfo') || '{}').username
+})
 </script>
 
 <template>
@@ -64,7 +68,7 @@ const handleLogout = () => {
       <el-dropdown @command="handleDropDownClick">
         <span flex items-center>
           <el-avatar :size="30" :src="circleUrl" />
-          <span ml10px>{{ userStore().getUserInfo }}</span>
+          <span ml10px>{{ username }}</span>
         </span>
         <template #dropdown>
           <el-dropdown-menu @click="handleLogout">
