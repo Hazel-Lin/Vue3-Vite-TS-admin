@@ -6,8 +6,8 @@ import { userStore } from '../../store/modules/user'
 const router = useRouter()
 
 const accountData = reactive({
-  name: '',
-  password: '',
+  name: 'admin',
+  password: '123456',
 })
 const phoneData = reactive({
   phoneNum: undefined,
@@ -21,7 +21,7 @@ const loginRules = {
   password: [{ required: true, message: '请输入密码', trigger: 'change' }],
 }
 const loginAction = async () => {
-  const result = await userStore().login()
+  const result = await userStore().login(accountData)
   // 登录成功获取到token之后再跳转页面
   result.isSuccess() && router.push('/')
 }
@@ -38,12 +38,18 @@ const loginAction = async () => {
           <el-tabs v-model="activeTabName" stretch>
             <el-tab-pane label="账号密码登录" name="first">
               <el-form-item prop="name">
-                <el-input v-model="accountData.name" />
+                <el-input
+                  v-model="accountData.name"
+                  clearable
+                  placeholder="请输入您的账号"
+                />
               </el-form-item>
               <el-form-item prop="password">
                 <el-input
                   v-model="accountData.password"
                   show-password
+                  clearable
+                  placeholder="请输入您的密码"
                 />
               </el-form-item>
             </el-tab-pane>
@@ -102,8 +108,6 @@ const loginAction = async () => {
     padding: 20px;
     margin-bottom: 50px;
     text-align: center;
-    background-color: #fff;
-
     .title {
       p {
         font-size: 12px;

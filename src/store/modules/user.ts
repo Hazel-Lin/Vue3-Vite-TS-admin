@@ -69,12 +69,12 @@ export const userStore = defineStore({
     },
     // user login 登录后获取到token 通过token获取用户信息和权限并渲染菜单
     // 用户登录
-    async login() {
-      const params = {
-        username: 'admin',
-        password: '123456',
-      }
-      const res = await login(params)
+    async login(params: any) {
+      const { name: username, password } = params
+      const res = await login({
+        username,
+        password,
+      })
       if (res.isSuccess()) {
         const { token, userInfo } = res.getData()
         if (token) {
