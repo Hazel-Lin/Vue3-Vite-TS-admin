@@ -14,7 +14,14 @@ const app = createApp(App)
 app.use(store)
 
 start().then(() => {
+}).catch(() => {
+}).finally(() => {
   app.use(ElementPlus)
   app.use(router)
   app.mount('#app')
 })
+// start().then(() => {
+//   app.use(ElementPlus)
+//   app.use(router)
+//   app.mount('#app')
+// })
