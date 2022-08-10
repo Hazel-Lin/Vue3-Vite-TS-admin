@@ -7,11 +7,12 @@ import { getToken } from '@/utils/auth'
 import { getRoutes } from '@/utils/getRoutes'
 
 NProgress.configure({ showSpinner: false })
+// 此时获取到的token只会是undefined
+// const hasToken = getToken()
 
 router.beforeEach(async (to: RouteLocationNormalized, _: RouteLocationNormalized, next: any) => {
   NProgress.start()
   const hasToken = getToken()
-  console.log('hasToken', hasToken)
 
   if (to.path !== '/login') {
     if (hasToken) {

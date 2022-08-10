@@ -22,6 +22,7 @@ const loginRules = {
 }
 const loginAction = async () => {
   const result = await userStore().login()
+  // 登录成功获取到token之后再跳转页面
   result.isSuccess() && router.push('/')
 }
 </script>
