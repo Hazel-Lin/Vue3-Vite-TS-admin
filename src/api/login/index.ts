@@ -5,3 +5,6 @@ export const login = (data: any) => {
 export const getRoles = (data: any) => {
   return Request.post('admin/role', data)
 }
+export const logout = (data: any) => {
+  return Request.post('admin/logout', data)
+}

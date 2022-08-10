@@ -38,7 +38,7 @@ watch(
 )
 const handleDropDownClick = () => {}
 const handleLogout = () => {
-  userStore().removeToken()
+  userStore().logout()
   router.push('/login')
 }
 

@@ -32,4 +32,16 @@ export default [
       }
     },
   },
+  // 用户退出
+  {
+    url: '/admin/logout',
+    method: 'post',
+    response: () => {
+      return {
+        code: 0,
+        data: {},
+        message: '请求成功',
+      }
+    },
+  },
 ] as MockMethod[]

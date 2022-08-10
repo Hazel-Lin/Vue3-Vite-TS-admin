@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { UserInfo } from '@/types/user'
-import { getRoles, login } from '@/api/login'
+import { getRoles, login, logout } from '@/api/login'
 import { removeToken, setToken } from '@/utils/auth'
 // 存放用户信息
 // token userInfo userPermissions
@@ -67,11 +67,6 @@ export const userStore = defineStore({
     setUserRoles(role: any) {
       this.userRoles = role
     },
-    removeToken() {
-      this.setToken('')
-      this.setUserRoles([])
-      removeToken()
-    },
     // user login 登录后获取到token 通过token获取用户信息和权限并渲染菜单
     // 用户登录
     async login() {
@@ -98,6 +93,15 @@ export const userStore = defineStore({
         const { roles } = res.getData()
         roles && this.setUserRoles(roles)
         return roles
+      }
+    },
+    // 用户退出
+    async logout() {
+      const res = await logout({ token: this.getToken })
+      if (res.isSuccess()) {
+        this.setToken('')
+        this.setUserRoles([])
+        removeToken()
       }
     },
   },
