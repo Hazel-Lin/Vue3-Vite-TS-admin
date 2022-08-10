@@ -80,7 +80,7 @@ export const userStore = defineStore({
         password: '123456',
       }
       const res = await login(params)
-      if (res.isSuccess) {
+      if (res.isSuccess()) {
         const { token, userInfo } = res.getData()
         if (token) {
           this.setToken(token)
@@ -89,11 +89,12 @@ export const userStore = defineStore({
           this.getRoleList(token)
         }
       }
+      return res
     },
     // 获取用户权限
     async getRoleList(token: string) {
       const res = await getRoles({ token })
-      if (res.isSuccess) {
+      if (res.isSuccess()) {
         const { roles } = res.getData()
         roles && this.setUserRoles(roles)
         return roles

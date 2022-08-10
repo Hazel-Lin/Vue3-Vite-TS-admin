@@ -20,9 +20,9 @@ const loginRules = {
   name: [{ required: true, message: '请输入账号', trigger: 'change' }],
   password: [{ required: true, message: '请输入密码', trigger: 'change' }],
 }
-const loginAction = () => {
-  router.push('/')
-  const result = userStore().login()
+const loginAction = async () => {
+  const result = await userStore().login()
+  result.isSuccess() && router.push('/')
 }
 </script>
 
@@ -38,19 +38,22 @@ const loginAction = () => {
             <el-tab-pane label="账号密码登录" name="first">
               <el-form-item prop="name">
                 <el-input v-model="accountData.name" />
-              </el-form-item><el-form-item prop="password">
+              </el-form-item>
+              <el-form-item prop="password">
                 <el-input
                   v-model="accountData.password"
                   show-password
                 />
               </el-form-item>
-            </el-tab-pane><el-tab-pane label="手机验证登录" name="second">
+            </el-tab-pane>
+            <el-tab-pane label="手机验证登录" name="second">
               <el-form-item prop="name">
                 <el-input
                   v-model="phoneData.phoneNum"
                   placeholder="请输入您的手机号"
                 />
-              </el-form-item><el-form-item prop="password">
+              </el-form-item>
+              <el-form-item prop="password">
                 <div class="verify-code">
                   <el-input
                     v-model="phoneData.verifyCode"
@@ -58,7 +61,8 @@ const loginAction = () => {
                     maxlength="6"
                     show-word-limit
                     show-password
-                  /><el-button>获取验证码</el-button>
+                  />
+                  <el-button>获取验证码</el-button>
                 </div>
               </el-form-item>
             </el-tab-pane>
