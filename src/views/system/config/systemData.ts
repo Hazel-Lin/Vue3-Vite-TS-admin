@@ -33,15 +33,11 @@ export const systemData: any = {
       placeholder: '请选择状态',
       selectOptions: [
         {
-          label: '全部',
-          value: '2',
-        },
-        {
-          label: '启用',
+          label: '在线',
           value: '1',
         },
         {
-          label: '禁用',
+          label: '不在线',
           value: '0',
         },
       ],
