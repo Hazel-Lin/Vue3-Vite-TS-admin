@@ -38,7 +38,7 @@ declare module '@vue/runtime-core' {
     ElTabs: typeof import('element-plus/es')['ElTabs']
     MyDialog: typeof import('./src/components/Dialog/my-dialog.vue')['default']
     MySearch: typeof import('./src/components/Search/mySearch.vue')['default']
-    MyTable: typeof import('./src/components/Mytable/myTable.vue')['default']
+    MyTable: typeof import('./src/components/My-Table/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

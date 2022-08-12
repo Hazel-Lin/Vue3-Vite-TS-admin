@@ -3,7 +3,7 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 import moment from 'moment'
 import { systemData } from './config/systemData'
 import mySearch from '@/components/Search/mySearch.vue'
-import myTable from '@/components/Mytable/myTable.vue'
+import myTable from '@/components/My-Table/index.vue'
 const list: any = []
 for (let i = 0; i < 20; i++) {
   list.push({
