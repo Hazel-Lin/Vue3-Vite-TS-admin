@@ -2,15 +2,16 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vite build",
     "serve": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
     "@types/mockjs": "^1.0.6",
     "axios": "^0.24.0",
     "element-plus": "^2.2.12",
-    "js-cookie": "^2.2.1",
+    "js-cookie": "^3.0.1",
     "mockjs": "^1.1.0",
     "moment": "^2.29.1",
     "nprogress": "^0.2.0",

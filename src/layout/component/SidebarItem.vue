@@ -71,7 +71,7 @@ const resolvePath = (routePath: any) => {
         </el-menu-item>
       </Link>
     </template>
-    <el-submenu
+    <el-sub-menu
       v-else
       ref="subMenu"
       :index="item.path"
@@ -88,7 +88,7 @@ const resolvePath = (routePath: any) => {
         :item="child"
         :base-path="resolvePath(child.path)"
       />
-    </el-submenu>
+    </el-sub-menu>
   </template>
 </template>
 

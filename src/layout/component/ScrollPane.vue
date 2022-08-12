@@ -9,17 +9,18 @@ const tagAndTagSpacing = 4
 const instance: any = getCurrentInstance()
 
 const scrollWrapper: any = computed(() => {
-  return instance.refs.scrollContainer.$refs?.wrap
+  return instance.refs.scrollContainer.$refs?.wrap$
 })
+const emitScroll = () => {
+  emit('scroll')
+}
 onMounted(() => {
   scrollWrapper.value.addEventListener('scroll', emitScroll, true)
 })
 onBeforeUnmount(() => {
   scrollWrapper.value.removeEventListener('scroll', emitScroll, true)
 })
-const emitScroll = () => {
-  emit('scroll')
-}
+
 const handleScroll = (e: any) => {
   const eventDelta = e.wheelDelta || -e.deltaY * 40
   const $scrollWrapper = scrollWrapper
