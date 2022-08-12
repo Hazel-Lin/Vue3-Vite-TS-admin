@@ -125,14 +125,15 @@ const getList = ({ page, limit }: any) => {
       </template>
       <template #handler="{ row }">
         <el-button
-          type="text"
+          type="primary"
+          text
           @click="handleEdit()"
         >
           编辑
         </el-button>
         <el-button
-          type="text"
-          class="color-#F56C6C"
+          type="danger"
+          text
           @click="handleDelete()"
         >
           删除
