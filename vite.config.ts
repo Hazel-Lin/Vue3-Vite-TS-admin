@@ -5,7 +5,8 @@ import DefineOptions from 'unplugin-vue-define-options/vite'
 import Unocss from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import { viteMockServe } from 'vite-plugin-mock'
-
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 export default defineConfig({
   plugins: [
     Vue({
@@ -22,12 +23,13 @@ export default defineConfig({
       imports: [
         'vue',
         'vue-router',
-        'vue-i18n',
-        '@vueuse/head',
-        '@vueuse/core',
         'vitest',
       ],
       dts: 'src/auto-imports.d.ts',
+      resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
     }),
   ],
   resolve: {

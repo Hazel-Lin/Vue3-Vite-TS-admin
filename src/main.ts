@@ -5,8 +5,8 @@ import router from './router'
 import store from './store'
 import './permission'
 import { start } from './permission/start'
-// import 'element-plus/dist/index.css'
-import 'element-plus/lib/theme-chalk/index.css'
+import 'element-plus/dist/index.css'
+// import 'element-plus/lib/theme-chalk/index.css'
 import 'uno.css'
 
 const app = createApp(App)
