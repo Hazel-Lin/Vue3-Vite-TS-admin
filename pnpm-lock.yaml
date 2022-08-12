@@ -13,6 +13,7 @@ specifiers:
   axios: ^0.24.0
   commitizen: ^4.2.4
   cz-conventional-changelog: ^3.3.0
+  dayjs: ^1.11.4
   element-plus: ^2.2.12
   eslint: ^8.20.0
   eslint-config-prettier: ^8.3.0
@@ -44,6 +45,7 @@ specifiers:
 dependencies:
   '@types/mockjs': 1.0.6
   axios: 0.24.0
+  dayjs: 1.11.4
   element-plus: 2.2.12_vue@3.2.27
   js-cookie: 3.0.1
   mockjs: 1.1.0
