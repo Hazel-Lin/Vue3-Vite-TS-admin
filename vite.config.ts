@@ -59,7 +59,7 @@ export default defineConfig({
   },
 
   // 解决process is not defined的问题
-  define: { 'process.env': {} },
+  define: { 'process.env': process.env },
   test: {
     include: ['test/**/*.test.ts'],
     environment: 'jsdom',
