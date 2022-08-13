@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import path from 'path'
 import {
   computed,
   defineComponent,
@@ -27,7 +26,7 @@ const filterAffixTags = (routes: any, basePath = '/') => {
   let tags: any = []
   routes.forEach((route: any) => {
     if (route.meta && route.meta.affix) {
-      const tagPath = path.resolve(basePath, route.path)
+      const tagPath = `${basePath}/${route.path}`
       tags.push({
         fullPath: tagPath,
         path: tagPath,

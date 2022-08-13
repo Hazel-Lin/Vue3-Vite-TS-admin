@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import path from 'path'
 import type { PropType } from 'vue'
 import { ref } from 'vue'
 import Link from './Link.vue'
@@ -47,7 +46,8 @@ const resolvePath = (routePath: any) => {
   if (httpReg.test(routePath) || httpReg.test(props.basePath))
     return routePath || props.basePath
   else
-    return path.resolve(props.basePath, routePath)
+    // return path.resolve(props.basePath, routePath)
+    return `${props.basePath}/${routePath}`
 }
 </script>
 
