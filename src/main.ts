@@ -12,7 +12,7 @@ import 'uno.css'
 const app = createApp(App)
 // 避免pinia报错
 app.use(store)
-
+console.log(process.env, 123)
 start().then(() => {
 }).catch(() => {
 }).finally(() => {
