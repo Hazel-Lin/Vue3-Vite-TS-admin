@@ -1,13 +1,14 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios from 'axios'
 import Message from 'element-plus'
-import { IResponse, ILogin, RequestOptions } from './type'
-import { getToken, TokenPrefix } from '@/utils/auth'
+import type { IResponse, RequestOptions } from './type'
+import { getToken } from '@/utils/auth'
 
-const BASE = process.env.VUE_APP_BASE_API
+const BASE = ''
 
 const service: AxiosInstance = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API,
-  timeout: 5000
+  baseURL: '',
+  timeout: 5000,
 })
 
 // 定义错误码
@@ -21,7 +22,7 @@ const ErrorCode: any = {
   Expired: 401,
   NoRight: 403,
   BadGateway: 502,
-  MediaTokenError: -100
+  MediaTokenError: -100,
 }
 
 // 封装一个处理错误码的函数 部分需要根据业务逻辑定义
@@ -33,19 +34,20 @@ function handleErrorCode(code: number, message?: string) {
       ErrorCode.NoLogin,
       ErrorCode.Expired,
       ErrorCode.BadGateway,
-      ErrorCode.MediaTokenError
+      ErrorCode.MediaTokenError,
     ].includes(code)
   ) {
     window.location.replace(`${BASE}login`)
     hasHandle = true
-  } else if (code !== ErrorCode.Success) {
+  }
+  else if (code !== ErrorCode.Success) {
     message && handleErrorMessage(message)
   }
   return hasHandle
 }
 
 function handleErrorMessage(message: string) {
-  ;(Message as any).error(message)
+  (Message as any).error(message)
 }
 
 // 封装请求拦截
@@ -53,15 +55,14 @@ function handleErrorMessage(message: string) {
 service.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     const token = getToken()
-    if (token) {
+    if (token)
       config.headers.Authorization = token
-    }
     return config
   },
   (error) => {
     console.log(error)
     return Promise.reject(error)
-  }
+  },
 )
 
 // 响应拦截时需要对错误码处理
@@ -72,23 +73,24 @@ service.interceptors.response.use(
     // 接口返回正常
     if (!handleErrorCode(code, message)) {
       return res
-    } else {
+    }
+    else {
       return Promise.resolve({
         code,
         message,
-        data: null
+        data: null,
       })
     }
   },
   (error) => {
     console.log(error)
     return Promise.reject(error)
-  }
+  },
 )
 
 const request = <T = any>(
   config: AxiosRequestConfig,
-  options?: RequestOptions
+  options?: RequestOptions,
 ): Promise<T> => {
   const conf = config
   return new Promise((resolve, reject) => {
@@ -96,7 +98,7 @@ const request = <T = any>(
       .request<any, AxiosResponse<IResponse>>(conf)
       .then((res: AxiosResponse<IResponse>) => {
         const {
-          data: { result }
+          data: { result },
         } = res
         resolve(result as T)
       })
@@ -105,33 +107,33 @@ const request = <T = any>(
 
 export function get<T = any>(
   config: AxiosRequestConfig,
-  options?: RequestOptions
+  options?: RequestOptions,
 ): Promise<T> {
   return request({ ...config, method: 'GET' }, options)
 }
 
 export function post<T = any>(
   config: AxiosRequestConfig,
-  options?: RequestOptions
+  options?: RequestOptions,
 ): Promise<T> {
   return request({ ...config, method: 'POST' }, options)
 }
 
 export function put<T = any>(
   config: AxiosRequestConfig,
-  options?: RequestOptions
+  options?: RequestOptions,
 ): Promise<T> {
   return request({ ...config, method: 'PUT' }, options)
 }
 export function del<T = any>(
   config: AxiosRequestConfig,
-  options?: RequestOptions
+  options?: RequestOptions,
 ): Promise<T> {
   return request({ ...config, method: 'DELETE' }, options)
 }
 export function patch<T = any>(
   config: AxiosRequestConfig,
-  options?: RequestOptions
+  options?: RequestOptions,
 ): Promise<T> {
   return request({ ...config, method: 'PATCH' }, options)
 }
