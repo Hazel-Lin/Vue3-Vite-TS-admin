@@ -1,26 +1,11 @@
 import path from 'path'
-import { defineConfig } from 'vitest/config'
-import Vue from '@vitejs/plugin-vue'
-import DefineOptions from 'unplugin-vue-define-options/vite'
-import Unocss from 'unocss/vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import { viteMockServe } from 'vite-plugin-mock'
-import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import type { ConfigEnv, UserConfigExport } from 'vite'
 import { loadEnv } from 'vite'
 import dayjs from 'dayjs'
 import pkg from './package.json'
 import { wrapperEnv } from './build/utils'
 import { createProxy } from './build/proxy'
-
-// 跨域代理重写
-// const regExps = (value: string, reg: string): string => {
-//   return value.replace(new RegExp(`^${reg}`, 'g'), '')
-// }
-function pathResolve(dir: string) {
-  return path.resolve(process.cwd(), '.', dir)
-}
+import { createVitePlugins } from './build/plugin'
 
 const { dependencies, devDependencies, name, version } = pkg
 const __APP_INFO__ = {
@@ -31,6 +16,7 @@ const __APP_INFO__ = {
 export default ({ command, mode }: ConfigEnv): UserConfigExport => {
   // 根据项目配置。可以配置在.env文件
   const root = process.cwd()
+  console.log(command, 'command')
 
   const env = loadEnv(mode, root)
 
@@ -79,37 +65,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       // Load proxy configuration from .env
       proxy: createProxy(VITE_PROXY),
     },
-
-    plugins: [
-      Vue({
-        include: [/\.vue$/, /\.md$/],
-      }),
-      DefineOptions(),
-      Unocss(),
-      AutoImport({
-        imports: [
-          'vue',
-          'vue-router',
-          'vitest',
-        ],
-        dts: 'src/auto-imports.d.ts',
-        resolvers: [ElementPlusResolver()],
-      }),
-      Components({
-        resolvers: [ElementPlusResolver()],
-      }),
-
-      viteMockServe({
-        mockPath: 'mock',
-        localEnabled: !isBuild,
-        prodEnabled: isBuild,
-        //  这样可以控制关闭mock的时候不让mock打包到最终代码内
-        injectCode: `
-          import { setupProdMockServer } from './mockProdServer';
-          setupProdMockServer();
-        `,
-      }),
-    ],
+    plugins: createVitePlugins(viteEnv, isBuild),
   }
 }
 
