@@ -3,7 +3,7 @@ import type { MockMethod } from 'vite-plugin-mock'
 export default [
   // 用户登录
   {
-    url: '/admin/login',
+    url: '/basic-api/login',
     method: 'post',
     response: () => {
       return {
@@ -20,7 +20,7 @@ export default [
   },
   // 获取用户权限
   {
-    url: '/admin/role',
+    url: '/basic-api/role',
     method: 'post',
     response: () => {
       return {
@@ -34,7 +34,7 @@ export default [
   },
   // 用户退出
   {
-    url: '/admin/logout',
+    url: '/basic-api/logout',
     method: 'post',
     response: () => {
       return {

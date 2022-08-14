@@ -14,6 +14,7 @@ specifiers:
   commitizen: ^4.2.4
   cz-conventional-changelog: ^3.3.0
   dayjs: ^1.11.4
+  dotenv: ^16.0.1
   element-plus: ^2.2.12
   eslint: ^8.20.0
   eslint-config-prettier: ^8.3.0
@@ -69,6 +70,7 @@ devDependencies:
   '@vue/compiler-sfc': 3.2.27
   commitizen: 4.2.4_@types+node@18.0.5
   cz-conventional-changelog: 3.3.0_@types+node@18.0.5
+  dotenv: registry.npmmirror.com/dotenv/16.0.1
   eslint: 8.21.0
   eslint-config-prettier: 8.3.0_eslint@8.21.0
   eslint-plugin-prettier: 4.0.0_st25f4lpbwkizacyxxbnsq5zoa
@@ -5644,6 +5646,13 @@ packages:
     resolution: {integrity: sha512-En7tneq+j0qAiVwysBD79y86MT3ModuoIJbe7JXp+sb5UAjInSShmK3nXXMioBzfF7rXC12hv12d4IyCVwN4dA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/node/-/node-18.0.5.tgz}
     name: '@types/node'
     version: 18.0.5
+    dev: true
+
+  registry.npmmirror.com/dotenv/16.0.1:
+    resolution: {integrity: sha512-1K6hR6wtk2FviQ4kEiSjFiH5rpzEVi8WW0x96aztHVMhEspNpc4DVOUTEHtEva5VThQ8IaBX1Pe4gSzpVVUsKQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/dotenv/-/dotenv-16.0.1.tgz}
+    name: dotenv
+    version: 16.0.1
+    engines: {node: '>=12'}
     dev: true
 
   registry.npmmirror.com/esbuild-android-64/0.14.53:

@@ -21,7 +21,7 @@ for (let i = 0; i < 20; i++) {
 export default [
   // 获取菜单数据
   {
-    url: '/admin/getMenuList',
+    url: '/basic-api/getMenuList',
     method: 'post',
     response: () => {
       return {
