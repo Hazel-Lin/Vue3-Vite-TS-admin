@@ -44,15 +44,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       __APP_INFO__: JSON.stringify(__APP_INFO__),
     },
     build: {
-      target: 'es2015',
-      outDir: 'dist',
-      terserOptions: {
-        compress: {
-          keep_infinity: true,
-          // Used to delete console in production environment
-          drop_console: VITE_DROP_CONSOLE,
-        },
-      },
+      sourcemap: true,
       // Turning off brotliSize display can slightly reduce packaging time
       brotliSize: false,
       chunkSizeWarningLimit: 4000,

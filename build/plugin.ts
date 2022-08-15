@@ -37,7 +37,7 @@ export function createVitePlugins(viteEnv: any, isBuild: boolean) {
     viteMockServe({
     ignore: /^\_/,
     mockPath: 'mock',
-    localEnabled: !isBuild,
+    localEnabled: true,
     prodEnabled: true,
     injectCode: `
       import { setupProdMockServer } from './mockProdServer';
@@ -45,7 +45,6 @@ export function createVitePlugins(viteEnv: any, isBuild: boolean) {
       `,
   })
   );
-  
 
   return vitePlugins;
 }
