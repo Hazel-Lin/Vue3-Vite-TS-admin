@@ -42,6 +42,7 @@
     "husky": "^7.0.0",
     "jsdom": "^20.0.0",
     "path": "^0.12.7",
+    "picocolors": "^1.0.0",
     "prettier": "^2.4.1",
     "typescript": "^4.3.2",
     "unocss": "^0.45.1",

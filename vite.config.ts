@@ -1,63 +1,32 @@
-import path from 'path'
-import type { ConfigEnv, UserConfigExport } from 'vite'
+import { resolve } from 'path'
 import { loadEnv } from 'vite'
-import dayjs from 'dayjs'
-import pkg from './package.json'
-import { wrapperEnv } from './build/utils'
-import { createProxy } from './build/proxy'
-import { createVitePlugins } from './build/plugin'
+import { warpperEnv } from './build'
+import { getPluginsList } from './build/plugins'
 
-const { dependencies, devDependencies, name, version } = pkg
-const __APP_INFO__ = {
-  pkg: { dependencies, devDependencies, name, version },
-  lastBuildTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-}
+// 当前执行node命令时文件夹的地址（工作目录）
+const root = process.cwd()
 
-export default ({ command, mode }: ConfigEnv): UserConfigExport => {
-  // 根据项目配置。可以配置在.env文件
-  const root = process.cwd()
-  console.log(command, 'command')
-
-  const env = loadEnv(mode, root)
-
-  // The boolean type read by loadEnv is a string. This function can be converted to boolean type
-  const viteEnv = wrapperEnv(env)
-
-  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY, VITE_DROP_CONSOLE } = viteEnv
-
-  const isBuild = command === 'build'
+export default ({ command, mode }) => {
+  const {
+    VITE_LEGACY,
+    VITE_PUBLIC_PATH,
+  } = warpperEnv(loadEnv(mode, root))
   return {
     base: VITE_PUBLIC_PATH,
     root,
     resolve: {
       // 配置别名
       alias: {
-        '@/': `${path.resolve(__dirname, 'src')}/`,
+        '@/': `${resolve(__dirname, 'src')}/`,
       },
     },
-    // 解决process is not defined的问题
-    // define: { 'process.env': process.env },
-    define: {
-      // setting vue-i18-next
-      // Suppress warning
-      __INTLIFY_PROD_DEVTOOLS__: false,
-      __APP_INFO__: JSON.stringify(__APP_INFO__),
-    },
+    plugins: getPluginsList(command, VITE_LEGACY),
     build: {
       sourcemap: true,
       // Turning off brotliSize display can slightly reduce packaging time
       brotliSize: false,
+      // 消除 打包超过500kb警告问题
       chunkSizeWarningLimit: 4000,
     },
-    server: {
-      // Listening on all local IPs
-      host: true,
-      // 端口
-      port: VITE_PORT,
-      // Load proxy configuration from .env
-      proxy: createProxy(VITE_PROXY),
-    },
-    plugins: createVitePlugins(viteEnv, isBuild),
   }
 }
-
