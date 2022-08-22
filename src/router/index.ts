@@ -57,7 +57,7 @@ export const constantRoutes: any[] = [
     component: Layout,
     redirect: 'noRedirect',
     name: 'Base',
-    meta: { title: '基础配置', icon: 'el-icon-setting' },
+    meta: { title: '基础配置', icon: 'table' },
     children: [
       {
         path: 'index',

@@ -50,11 +50,13 @@ const username = computed(() => {
 <template>
   <div class="content-nav-head">
     <div class="content-nav-head-left">
-      <i
-        :class="isFold ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
+      <el-icon
         class="menu-flod"
         @click="handleFold"
-      />
+      >
+        <Expand v-if="isFold" />
+        <Fold v-else />
+      </el-icon>
       <el-breadcrumb separator="/">
         <el-breadcrumb-item
           v-for="(item, index) in breadcrumbsList"

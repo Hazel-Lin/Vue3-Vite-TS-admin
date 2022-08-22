@@ -6,7 +6,7 @@ const systemRouter = {
   name: 'System',
   meta: {
     title: '系统配置',
-    icon: 'el-icon-menu',
+    icon: 'table',
     noCache: true,
     // 仅有管理员有权限
     roles: ['admin'],
@@ -19,7 +19,7 @@ const systemRouter = {
         import(
           /* webpackChunkName: "system" */ '@/views/system/index.vue'
         ),
-      meta: { title: '菜单管理', icon: 'el-icon-menu' },
+      meta: { title: '菜单管理', icon: 'table' },
     },
   ],
 }

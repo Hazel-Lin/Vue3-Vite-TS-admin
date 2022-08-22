@@ -66,8 +66,8 @@ const resolvePath = (routePath: any) => {
         <el-menu-item
           :index="resolvePath(onlyOneChild.path)"
         >
-          <i :class="onlyOneChild.meta?.icon" />
-          <span>{{ onlyOneChild.meta?.title }}</span>
+          <SvgIcon :name="onlyOneChild.meta?.icon" />
+          <span ml-2>{{ onlyOneChild.meta?.title }}</span>
         </el-menu-item>
       </Link>
     </template>
@@ -78,8 +78,8 @@ const resolvePath = (routePath: any) => {
       popper-append-to-body
     >
       <template v-if="item.meta" #title>
-        <i :class="item.meta && item.meta.icon" />
-        <span>{{ item.meta?.title }}</span>
+        <SvgIcon :name="item.meta && item.meta.icon" />
+        <span ml-2>{{ item.meta?.title }}</span>
       </template>
       <sidebar-item
         v-for="child in item.children"
