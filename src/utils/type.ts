@@ -11,7 +11,7 @@ export interface IResponse<T = any> {
   status: string | number
 }
 
-/**用户登录 */
+/** 用户登录 */
 export interface ILogin {
   /** 账户名称 */
   username: string

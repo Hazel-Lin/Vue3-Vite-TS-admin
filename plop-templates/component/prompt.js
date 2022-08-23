@@ -7,7 +7,7 @@ module.exports = {
       type: 'input',
       name: 'name',
       message: '创建组件',
-      validate: notEmpty('name')
+      validate: notEmpty('name'),
     },
     {
       type: 'checkbox',
@@ -17,29 +17,29 @@ module.exports = {
         {
           name: '<template>',
           value: 'template',
-          checked: true
+          checked: true,
         },
         {
           name: '<script>',
           value: 'script',
-          checked: true
+          checked: true,
         },
         {
           name: 'style',
           value: 'style',
-          checked: true
-        }
+          checked: true,
+        },
       ],
       validate(value) {
         if (
-          value.indexOf('script') === -1 &&
-          value.indexOf('template') === -1
-        ) {
+          !value.includes('script')
+          && !value.includes('template')
+        )
           return 'Components require at least a <script> or <template> tag.'
-        }
+
         return true
-      }
-    }
+      },
+    },
   ],
   actions: (data) => {
     const name = '{{properCase name}}'
@@ -49,14 +49,14 @@ module.exports = {
         path: `src/components/${name}/index.vue`,
         templateFile: 'plop-templates/component/index.hbs',
         data: {
-          name: name,
+          name,
           template: data.blocks.includes('template'),
           script: data.blocks.includes('script'),
-          style: data.blocks.includes('style')
-        }
-      }
+          style: data.blocks.includes('style'),
+        },
+      },
     ]
 
     return actions
-  }
+  },
 }

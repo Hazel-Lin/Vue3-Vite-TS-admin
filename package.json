@@ -6,7 +6,10 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "typecheck": "vue-tsc --noEmit"
+    "typecheck": "vue-tsc --noEmit",
+    "prepare": "husky install",
+    "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
+    "commit":"cz"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.9",
@@ -41,8 +44,9 @@
     "eslint": "^8.20.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "husky": "^7.0.0",
+    "husky": "^8.0.0",
     "jsdom": "^20.0.0",
+    "lint-staged": "^13.0.3",
     "path": "^0.12.7",
     "picocolors": "^1.0.0",
     "prettier": "^2.4.1",
@@ -58,6 +62,15 @@
     "vite-svg-loader": "^3.4.0",
     "vitest": "^0.20.2",
     "vue-tsc": "^0.0.24"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,vue}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.md": [
+      "prettier --write"
+    ]
   },
   "config": {
     "commitizen": {
